@@ -423,3 +423,160 @@ main:focus { outline: none; }
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
   .hero__in { opacity: 1 !important; transform: none !important; }
 }
+
+/* =====================================================================
+   Paper & sticker layer
+   Everything that isn't the robot, rocket or orbit reads as either folded
+   paper (origami) or a die-cut sticker slapped onto the page.
+   ===================================================================== */
+
+:root {
+  /* Faint paper grain for paper surfaces. */
+  --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .13 0 0 0 0 .15 0 0 0 0 .19 0 0 0 .07 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  --sticker-shadow: drop-shadow(0 10px 12px rgba(32, 38, 48, 0.16)) drop-shadow(0 2px 2px rgba(32, 38, 48, 0.12));
+}
+main > .section { overflow-x: clip; } /* stickers near an edge never cause sideways scroll */
+
+/* ---------- Die-cut stickers ---------- */
+.sticker {
+  position: absolute; left: var(--x); top: var(--y); z-index: 3;
+  width: calc(var(--w, 100px) * var(--k, 1));
+  pointer-events: none; user-select: none;
+  transform: translate3d(var(--dx, 0px), calc(var(--py, 0px) + var(--dy, 0px)), 0) rotate(var(--pr, 0deg));
+  will-change: transform;
+}
+.sticker__body { position: relative; display: block; transform: rotate(var(--r, 0deg)); filter: var(--sticker-shadow); transition: transform 0.3s var(--ease-out), filter 0.3s var(--ease-out); }
+.sticker__body svg { display: block; width: 100%; height: auto; overflow: visible; }
+/* Peeling corner */
+.sticker--peel .sticker__body::after {
+  content: ""; position: absolute; right: 8%; bottom: 10%; width: 20%; aspect-ratio: 1;
+  background: linear-gradient(135deg, transparent 49%, #dfe3ea 50%, #ffffff 68%, #eef0f4 100%);
+  border-radius: 0 0 45% 0; box-shadow: -2px -2px 5px -2px rgba(32, 38, 48, 0.3);
+  transform-origin: 100% 100%; transition: transform 0.3s var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .sticker { pointer-events: auto; cursor: grab; touch-action: none; }
+  .sticker:hover .sticker__body { transform: rotate(calc(var(--r, 0deg) * 0.4)) translateY(-4px) scale(1.05); }
+  .sticker--peel:hover .sticker__body::after { transform: scale(1.6); }
+  .sticker.is-dragging { cursor: grabbing; z-index: 40; }
+  .sticker.is-dragging .sticker__body { transform: rotate(calc(var(--r, 0deg) * 0.2)) scale(1.12); filter: drop-shadow(0 24px 22px rgba(32, 38, 48, 0.22)) drop-shadow(0 3px 3px rgba(32, 38, 48, 0.12)); }
+}
+@media (max-width: 900px) { .sticker--desk, .origami--desk { display: none; } }
+@media (max-width: 900px) { .sticker { left: var(--mx, var(--x)); top: var(--my, var(--y)); } }
+@media (max-width: 640px) { .sticker { --k: 0.72; } }
+
+/* Slap-on entrance: drops from above the page and lands flat. */
+@media (prefers-reduced-motion: no-preference) {
+  .js .sticker:not(.is-in) .sticker__body { opacity: 0; }
+  .sticker.is-in .sticker__body { animation: sticker-slap 0.55s var(--ease-out) backwards; animation-delay: var(--delay, 0s); }
+}
+@keyframes sticker-slap {
+  from { opacity: 0; transform: rotate(calc(var(--r, 0deg) + 16deg)) scale(1.4); filter: drop-shadow(0 30px 24px rgba(32, 38, 48, 0.18)); }
+  55% { opacity: 1; }
+  to { opacity: 1; transform: rotate(var(--r, 0deg)) scale(1); }
+}
+
+/* ---------- Origami illustrations ---------- */
+.origami {
+  position: absolute; left: var(--x); top: var(--y); z-index: 1;
+  width: calc(var(--w, 120px) * var(--k, 1)); pointer-events: none;
+  transform: translate3d(0, var(--py, 0px), 0) rotate(calc(var(--r, 0deg) + var(--pr, 0deg)));
+  filter: drop-shadow(0 16px 16px rgba(32, 38, 48, 0.14));
+  will-change: transform;
+}
+.origami svg { display: block; width: 100%; height: auto; overflow: visible; }
+.origami .fold { transform-box: fill-box; transform-origin: center; }
+@media (prefers-reduced-motion: no-preference) {
+  .js .origami:not(.is-in) .fold { opacity: 0; }
+  .origami.is-in .fold { animation: origami-unfold 0.7s var(--ease-out) backwards; animation-delay: calc(var(--d, 0) * 85ms); }
+}
+@keyframes origami-unfold { from { opacity: 0; transform: perspective(400px) rotateY(-80deg) scale(0.5); } }
+
+/* ---------- Paper fold reveal (cards, spec rows) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-fold] {
+    opacity: 0; transform-origin: 50% 0;
+    transform: perspective(1400px) rotateX(-58deg) translateY(10px);
+    transition: opacity 0.7s var(--ease-out), transform 0.85s var(--ease-out);
+    transition-delay: calc(var(--fold-i, 0) * 80ms);
+  }
+  .js [data-fold].is-in { opacity: 1; transform: none; }
+}
+
+/* ---------- Accordion paper strip (section divider) ---------- */
+.fold-strip {
+  position: relative; z-index: 2; height: 28px; width: min(var(--container), 100% - 32px); margin: 0 auto;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0) 60%),
+    repeating-linear-gradient(90deg, #ffffff 0 22px, #e4e8f0 22px 44px);
+  border-radius: 6px; box-shadow: 0 10px 18px -14px rgba(32, 38, 48, 0.45), 0 0 0 1px rgba(32, 38, 48, 0.05);
+  transform-origin: 50% 50%;
+}
+.fold-strip::after { content: ""; position: absolute; right: 18px; top: 50%; width: 12px; height: 12px; margin-top: -6px; background: var(--orange); }
+@media (prefers-reduced-motion: no-preference) {
+  .js .fold-strip { transform: scaleX(0.12); opacity: 0; transition: transform 1s var(--ease-out), opacity 0.4s; }
+  .js .fold-strip.is-in { transform: none; opacity: 1; }
+}
+
+/* ---------- Sticker-style pieces of the existing UI ---------- */
+/* Section labels become little sticker chips. */
+.label {
+  display: inline-block; padding: 6px 12px; border-radius: 999px; background: var(--tint);
+  box-shadow: 0 0 0 3px #fff, 0 10px 16px -10px rgba(32, 38, 48, 0.45);
+  transform: rotate(-2deg);
+}
+.specs .label { background: #2c3546; box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.92), 0 10px 16px -10px rgba(0, 0, 0, 0.6); }
+
+/* Capability marquee: a strip of sticker chips. */
+.marquee { padding: 28px 0; }
+.marquee__group span {
+  margin-inline: 10px; padding: 9px 16px; background: #fff; border-radius: 999px;
+  box-shadow: 0 0 0 1px var(--line), 0 8px 14px -10px rgba(32, 38, 48, 0.5);
+  color: var(--graphite); transform: rotate(-1.5deg);
+}
+.marquee__group span:nth-child(even) { transform: rotate(1.5deg); }
+.marquee__group span:nth-child(3n) { background: var(--tint); }
+.marquee__group span:nth-child(5n) { background: var(--graphite); color: #fff; box-shadow: 0 0 0 3px #fff, 0 8px 14px -10px rgba(32, 38, 48, 0.6); }
+.marquee__group span:nth-child(5n)::before { background: var(--orange); }
+
+/* Card icon tiles: die-cut sticker frames around the 3D paper icons. */
+.card__icon { border: 4px solid #fff; box-shadow: 0 0 0 1px rgba(32, 38, 48, 0.07), 0 12px 18px -12px rgba(32, 38, 48, 0.5); transform: rotate(-3deg); transition: transform 0.3s var(--ease-out); }
+.bento .card:nth-child(even) .card__icon { transform: rotate(3deg); }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) { .bento .card:hover .card__icon { transform: rotate(0deg) scale(1.05); } }
+
+/* Paper grain on paper surfaces. */
+.card { background-image: var(--grain); }
+.card--cobalt { background-image: none; }
+.form { background-image: var(--grain); }
+
+/* Step numbers: round die-cut stickers. */
+.step__num { border-radius: 50%; background: var(--cobalt); color: #fff; box-shadow: 0 0 0 3px #fff, 0 10px 16px -10px rgba(32, 38, 48, 0.55); transform: rotate(-8deg); }
+.step:nth-child(even) .step__num { transform: rotate(7deg); background: var(--graphite); }
+@media (prefers-reduced-motion: no-preference) {
+  .step.is-visible .step__num { animation: num-slap 0.5s var(--ease-out) 0.15s backwards; }
+}
+@keyframes num-slap { from { opacity: 0; transform: rotate(24deg) scale(1.6); } }
+
+/* Demo form: a paper sheet taped to the page. */
+.form { overflow: visible; position: relative; }
+.tape {
+  position: absolute; top: -14px; left: 50%; width: 132px; height: 30px; z-index: 2;
+  transform: translateX(-50%) rotate(-3deg);
+  background: repeating-linear-gradient(45deg, rgba(32, 75, 255, 0.2) 0 7px, rgba(32, 75, 255, 0.12) 7px 14px);
+  clip-path: polygon(3% 0, 97% 0, 100% 20%, 97% 40%, 100% 60%, 97% 80%, 100% 100%, 3% 100%, 0 80%, 3% 60%, 0 40%, 3% 20%, 0 0);
+  box-shadow: 0 2px 4px rgba(32, 38, 48, 0.08);
+}
+
+/* FAQ answers unfold like a folded note. */
+@media (prefers-reduced-motion: no-preference) {
+  .faq__item[open] p { transform-origin: 50% 0; animation: note-unfold 0.45s var(--ease-out) both; }
+}
+@keyframes note-unfold { from { opacity: 0; transform: perspective(700px) rotateX(-75deg); } }
+
+/* CTA card: stickers sit above its content edge, the card keeps its folded corner. */
+.cta__card { isolation: isolate; border-top-right-radius: 0; }
+.cta__card::before {
+  content: ""; position: absolute; top: 0; right: 0; width: 64px; height: 64px; z-index: 1;
+  background: linear-gradient(225deg, var(--white) 50%, #1a3bd6 50%);
+  border-bottom-left-radius: 14px; box-shadow: -4px 4px 10px -4px rgba(0, 0, 0, 0.35);
+}

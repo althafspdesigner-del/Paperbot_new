@@ -39,6 +39,88 @@
     </defs>
   </svg>
 
+  <!-- Sticker + origami artwork. Stickers get a white die-cut border from the #diecut filter. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="diecut" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+        <feMorphology in="SourceAlpha" operator="dilate" radius="5" result="grow"/>
+        <feFlood flood-color="#ffffff"/>
+        <feComposite in2="grow" operator="in" result="outline"/>
+        <feMerge><feMergeNode in="outline"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <linearGradient id="holo" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#E9EEFF"/><stop offset=".28" stop-color="#FBD9F0"/>
+        <stop offset=".5" stop-color="#CBF2FF"/><stop offset=".72" stop-color="#FFF1C8"/><stop offset="1" stop-color="#D9CEFF"/>
+      </linearGradient>
+      <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".45" stop-color="#fff" stop-opacity=".55"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/>
+      </linearGradient>
+
+      <!-- Robot-face sticker (the hero robot's face) 120x100 -->
+      <g id="st-face">
+        <rect x="0" y="0" width="120" height="100" rx="26" fill="#fff" stroke="#D9DDE5" stroke-width="2"/>
+        <rect x="13" y="11" width="94" height="62" rx="16" fill="#202630"/>
+        <rect x="38" y="25" width="11" height="23" rx="5.5" fill="#F2F5FF"/>
+        <rect x="71" y="25" width="11" height="23" rx="5.5" fill="#F2F5FF"/>
+        <path d="M52 56q8 8 16 0" stroke="#F2F5FF" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <g fill="#202630"><rect x="44" y="82" width="5" height="8" rx="2.5"/><rect x="52" y="80" width="5" height="12" rx="2.5"/><rect x="60" y="78" width="5" height="16" rx="2.5"/><rect x="68" y="80" width="5" height="12" rx="2.5"/><rect x="76" y="82" width="5" height="8" rx="2.5"/></g>
+        <rect x="100" y="-12" width="16" height="16" fill="#F66B24"/>
+      </g>
+      <!-- Origami paper-plane sticker 140x90 -->
+      <g id="st-plane">
+        <polygon points="0,40 140,0 60,55" fill="#204BFF"/>
+        <polygon points="60,55 140,0 76,88" fill="#1236CC"/>
+        <polygon points="0,40 60,55 44,64" fill="#B9C8FF"/>
+        <polygon points="60,55 76,88 66,62" fill="#0E2AA3"/>
+      </g>
+      <!-- Ticket sticker 150x64 -->
+      <g id="st-ticket">
+        <path d="M8 0H142a8 8 0 0 1 8 8V22a10 10 0 0 0 0 20V56a8 8 0 0 1-8 8H8a8 8 0 0 1-8-8V42a10 10 0 0 0 0-20V8a8 8 0 0 1 8-8Z" fill="#fff" stroke="#D9DDE5" stroke-width="2"/>
+        <line x1="108" y1="8" x2="108" y2="56" stroke="#D9DDE5" stroke-width="2" stroke-dasharray="4 4"/>
+        <text x="18" y="29" font-family="IBM Plex Mono, ui-monospace, monospace" font-weight="500" font-size="15" fill="#202630" letter-spacing="1">EUR/USD</text>
+        <polyline points="18,48 34,42 46,46 62,36 78,40 94,30" fill="none" stroke="#204BFF" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+        <rect x="121" y="25" width="14" height="14" fill="#F66B24"/>
+      </g>
+      <!-- Candlestick sticker 100x100 -->
+      <g id="st-candles">
+        <rect x="0" y="0" width="100" height="100" rx="24" fill="#204BFF"/>
+        <g stroke="#fff" stroke-width="3" stroke-linecap="round"><line x1="26" y1="30" x2="26" y2="74"/><line x1="44" y1="22" x2="44" y2="62"/><line x1="62" y1="34" x2="62" y2="80"/><line x1="78" y1="16" x2="78" y2="54"/></g>
+        <rect x="20" y="40" width="12" height="24" rx="2" fill="#fff"/><rect x="38" y="30" width="12" height="22" rx="2" fill="#B9C8FF"/>
+        <rect x="56" y="44" width="12" height="26" rx="2" fill="#fff"/><rect x="72" y="22" width="12" height="22" rx="2" fill="#F66B24"/>
+      </g>
+      <!-- FX coin sticker 96x96 -->
+      <g id="st-coin">
+        <circle cx="48" cy="48" r="48" fill="#202630"/>
+        <circle cx="48" cy="48" r="37" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="2" stroke-dasharray="3 5"/>
+        <text x="48" y="60" text-anchor="middle" font-family="Manrope, system-ui, sans-serif" font-weight="800" font-size="34" fill="#fff" letter-spacing="-1">FX</text>
+        <rect x="66" y="16" width="12" height="12" fill="#F66B24"/>
+      </g>
+      <!-- Holographic KYC shield sticker 92x106 -->
+      <g id="st-shield">
+        <path d="M46 0L92 16V52C92 80 72 98 46 106C20 98 0 80 0 52V16Z" fill="url(#holo)" stroke="#fff" stroke-width="2"/>
+        <path d="M46 0L92 16V52C92 80 72 98 46 106C20 98 0 80 0 52V16Z" fill="url(#sheen)"/>
+        <path d="M27 53l13 13 25-27" fill="none" stroke="#202630" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <!-- API pill sticker 132x54 -->
+      <g id="st-api">
+        <rect x="0" y="0" width="132" height="54" rx="27" fill="#202630"/>
+        <text x="66" y="35" text-anchor="middle" font-family="IBM Plex Mono, ui-monospace, monospace" font-weight="500" font-size="20" fill="#fff">{ API }</text>
+      </g>
+      <!-- Speech-bubble sticker 156x88 -->
+      <g id="st-talk">
+        <path d="M22 0H134a22 22 0 0 1 22 22V48a22 22 0 0 1-22 22H58L34 88L38 70H22A22 22 0 0 1 0 48V22A22 22 0 0 1 22 0Z" fill="#204BFF"/>
+        <text x="78" y="44" text-anchor="middle" font-family="Manrope, system-ui, sans-serif" font-weight="800" font-size="21" fill="#fff" letter-spacing="-.5">Let's talk</text>
+      </g>
+      <!-- Sparkle sticker 70x70 -->
+      <g id="st-star">
+        <path d="M35 0C38 22 48 32 70 35C48 38 38 48 35 70C32 48 22 38 0 35C22 32 32 22 35 0Z" fill="#204BFF"/>
+        <path d="M35 14C36.5 26 44 33.5 56 35C44 36.5 36.5 44 35 56" fill="none" stroke="#B9C8FF" stroke-width="3" stroke-linecap="round"/>
+      </g>
+      <!-- Orange square sticker 40x40 (the logo accent) -->
+      <g id="st-square"><rect x="0" y="0" width="40" height="40" fill="#F66B24"/><rect x="0" y="0" width="40" height="40" fill="url(#sheen)"/></g>
+    </defs>
+  </svg>
+
   <header class="nav" id="top">
     <div class="nav__inner">
       <a class="brand" href="#top" aria-label="PAPERBOT — home">
@@ -80,6 +162,11 @@
           </div>
         </div>
         <a class="hero__scroll" href="#platform" aria-label="Scroll to the platform section"><span></span></a>
+        <span class="sticker sticker--desk" data-sticker data-parallax="0.1" data-spin="0.3" style="--x:11%;--y:24%;--w:120px;--r:-12deg;--delay:0.5s" aria-hidden="true"><span class="sticker__body"><svg viewBox="-10 -10 160 110"><use href="#st-plane" filter="url(#diecut)"/></svg></span></span>
+        <span class="sticker sticker--desk sticker--peel" data-sticker data-parallax="0.2" data-spin="0.5" style="--x:5%;--y:55%;--w:118px;--r:-9deg;--delay:0.65s" aria-hidden="true"><span class="sticker__body"><svg viewBox="-10 -22 140 132"><use href="#st-face" filter="url(#diecut)"/></svg></span></span>
+        <span class="sticker sticker--desk" data-sticker data-parallax="0.14" data-spin="-0.3" style="--x:79%;--y:23%;--w:156px;--r:7deg;--delay:0.6s" aria-hidden="true"><span class="sticker__body"><svg viewBox="-10 -10 170 84"><use href="#st-ticket" filter="url(#diecut)"/></svg></span></span>
+        <span class="sticker sticker--desk sticker--peel" data-sticker data-parallax="0.22" data-spin="0.4" style="--x:87%;--y:52%;--w:96px;--r:8deg;--delay:0.75s" aria-hidden="true"><span class="sticker__body"><svg viewBox="-10 -10 120 120"><use href="#st-candles" filter="url(#diecut)"/></svg></span></span>
+        <span class="sticker sticker--desk" data-sticker data-parallax="0.3" style="--x:79%;--y:71%;--w:30px;--r:12deg;--delay:0.85s" aria-hidden="true"><span class="sticker__body"><svg viewBox="-8 -8 56 56"><use href="#st-square" filter="url(#diecut)"/></svg></span></span>
       </div>
     </section>
 
@@ -95,6 +182,8 @@
 
     <!-- ================= ESSENCE ================= -->
     <section class="section essence" aria-labelledby="essence-title">
+      <span class="origami origami--desk" data-origami data-parallax="0.12" data-spin="0.25" style="--x:78%;--y:4%;--w:190px;--r:-6deg" aria-hidden="true"><svg viewBox="0 0 220 170"><polygon class="fold" style="--d:0" points="10,34 98,92 70,104" fill="#1236CC"/><polygon class="fold" style="--d:1" points="98,92 206,12 128,100" fill="#204BFF"/><polygon class="fold" style="--d:2" points="70,104 98,92 128,100 112,138" fill="#6F8BFF"/><polygon class="fold" style="--d:3" points="112,138 128,100 176,128" fill="#B9C8FF"/><polygon class="fold" style="--d:4" points="62,108 22,58 76,100" fill="#204BFF"/><polygon class="fold" style="--d:5" points="22,58 4,70 30,66" fill="#F66B24"/></svg></span>
+      <span class="sticker sticker--desk" data-sticker data-parallax="0.18" data-spin="0.5" style="--x:49%;--y:22%;--w:78px;--r:-10deg;--delay:0s" aria-hidden="true"><span class="sticker__body"><svg viewBox="-10 -10 116 116"><use href="#st-coin" filter="url(#diecut)"/></svg></span></span>
       <div class="container essence__grid">
         <div data-reveal>
           <p class="label mono">01 / Our expression</p>
@@ -109,7 +198,11 @@
     </section>
 
     <!-- ================= PLATFORM BREAKDOWN (bento) ================= -->
+    <div class="fold-strip" data-strip aria-hidden="true"></div>
+
     <section class="section section--pearl" id="platform" aria-labelledby="platform-title">
+      <span class="origami origami--desk" data-origami data-parallax="0.08" data-spin="1.2" style="--x:85%;--y:3%;--w:138px;--r:0deg" aria-hidden="true"><svg viewBox="0 0 160 160"><g transform="rotate(0 80 80)"><polygon class="fold" style="--d:0" points="80,80 80,18 128,56" fill="#204BFF"/><polygon class="fold" style="--d:4" points="80,80 128,56 92,92" fill="#1236CC"/></g><g transform="rotate(90 80 80)"><polygon class="fold" style="--d:1" points="80,80 80,18 128,56" fill="#E9EEFF"/><polygon class="fold" style="--d:5" points="80,80 128,56 92,92" fill="#C9D4FF"/></g><g transform="rotate(180 80 80)"><polygon class="fold" style="--d:2" points="80,80 80,18 128,56" fill="#202630"/><polygon class="fold" style="--d:6" points="80,80 128,56 92,92" fill="#3A4250"/></g><g transform="rotate(270 80 80)"><polygon class="fold" style="--d:3" points="80,80 80,18 128,56" fill="#204BFF"/><polygon class="fold" style="--d:7" points="80,80 128,56 92,92" fill="#1236CC"/></g><rect class="fold" style="--d:8" x="74" y="74" width="12" height="12" fill="#F66B24"/></svg></span>
+      <span class="sticker" data-sticker data-parallax="0.16" data-spin="-0.3" style="--mx:66%;--my:3%;--x:68%;--y:10%;--w:128px;--r:-6deg;--delay:0s" aria-hidden="true"><span class="sticker__body"><svg viewBox="-10 -10 152 74"><use href="#st-api" filter="url(#diecut)"/></svg></span></span>
       <div class="container">
         <header class="section__head" data-reveal>
           <p class="label mono">02 / Platform</p>
@@ -118,7 +211,7 @@
         </header>
 
         <div class="bento">
-          <article class="card card--feature tilt" style="grid-area:crm" data-reveal>
+          <article class="card card--feature tilt" style="grid-area:crm" data-fold>
             <div class="card__icon scene-slot" data-scene="icon" data-icon="crm" aria-hidden="true"><svg class="card__icon-fallback" width="30" height="30"><use href="#i-crm"/></svg></div>
             <h3>Forex CRM</h3>
             <p>A single source of truth for every lead, client and account. Pipelines, tasks, automations and client timelines for sales and retention teams.</p>
@@ -130,13 +223,13 @@
             <div class="card__art card__art--stack" aria-hidden="true"><i></i><i></i><i></i></div>
           </article>
 
-          <article class="card tilt" style="grid-area:room" data-reveal>
+          <article class="card tilt" style="grid-area:room" data-fold>
             <div class="card__icon scene-slot" data-scene="icon" data-icon="room" aria-hidden="true"><svg class="card__icon-fallback" width="30" height="30"><use href="#i-portal"/></svg></div>
             <h3>Trader's Room</h3>
             <p>A branded client portal for registration, deposits, withdrawals, account management and documents, on web and mobile.</p>
           </article>
 
-          <article class="card card--tall card--cobalt tilt" style="grid-area:ib" data-reveal>
+          <article class="card card--tall card--cobalt tilt" style="grid-area:ib" data-fold>
             <div class="card__icon scene-slot" data-scene="icon" data-icon="ib" aria-hidden="true"><svg class="card__icon-fallback" width="30" height="30"><use href="#i-network"/></svg></div>
             <h3>IB &amp; Partner Program</h3>
             <p>Multi-level IB structures, rebates, commissions, referral links and partner dashboards that settle automatically.</p>
@@ -147,32 +240,32 @@
             </div>
           </article>
 
-          <article class="card tilt" style="grid-area:conn" data-reveal>
+          <article class="card tilt" style="grid-area:conn" data-fold>
             <div class="card__icon scene-slot" data-scene="icon" data-icon="conn" aria-hidden="true"><svg class="card__icon-fallback" width="30" height="30"><use href="#i-plug"/></svg></div>
             <h3>Trading platform connectivity</h3>
             <p>Bridges to the trading platforms your desk runs: account creation, balance operations, real-time trade data and reporting.</p>
           </article>
 
-          <article class="card tilt" style="grid-area:pay" data-reveal>
+          <article class="card tilt" style="grid-area:pay" data-fold>
             <div class="card__icon scene-slot" data-scene="icon" data-icon="pay" aria-hidden="true"><svg class="card__icon-fallback" width="30" height="30"><use href="#i-wallet"/></svg></div>
             <h3>Payments &amp; wallets</h3>
             <p>PSP integrations, multi-currency wallets, internal transfers and configurable deposit and withdrawal workflows.</p>
           </article>
 
-          <article class="card tilt" style="grid-area:kyc" data-reveal>
+          <article class="card tilt" style="grid-area:kyc" data-fold>
             <div class="card__icon scene-slot" data-scene="icon" data-icon="kyc" aria-hidden="true"><svg class="card__icon-fallback" width="30" height="30"><use href="#i-shield"/></svg></div>
             <h3>Compliance &amp; KYC</h3>
             <p>Document collection, verification providers, risk scoring and audit trails for your regulators and your ops team.</p>
           </article>
 
-          <article class="card card--wide tilt" style="grid-area:ops" data-reveal>
+          <article class="card card--wide tilt" style="grid-area:ops" data-fold>
             <div class="card__icon scene-slot" data-scene="icon" data-icon="ops" aria-hidden="true"><svg class="card__icon-fallback" width="30" height="30"><use href="#i-chart"/></svg></div>
             <h3>Back office, risk &amp; reporting</h3>
             <p>Dealing desk tools, exposure monitoring, bonus engines and real-time BI across sales, finance and dealing, from the same login.</p>
             <div class="card__art card__art--bars" aria-hidden="true"><i style="--h:40%"></i><i style="--h:65%"></i><i style="--h:50%"></i><i style="--h:85%"></i><i style="--h:70%"></i><i style="--h:95%"></i></div>
           </article>
 
-          <article class="card tilt" style="grid-area:api" data-reveal>
+          <article class="card tilt" style="grid-area:api" data-fold>
             <div class="card__icon scene-slot" data-scene="icon" data-icon="api" aria-hidden="true"><svg class="card__icon-fallback" width="30" height="30"><use href="#i-api"/></svg></div>
             <h3>Open API</h3>
             <p>REST APIs and webhooks so your own apps, bots and partners plug straight into the platform.</p>
@@ -183,6 +276,7 @@
 
     <!-- ================= HOW IT WORKS (paper rocket) ================= -->
     <section class="section how" id="how" aria-labelledby="how-title">
+      <span class="sticker" data-sticker data-parallax="0.2" data-spin="1.5" style="--mx:80%;--my:2%;--x:47%;--y:7%;--w:58px;--r:0deg;--delay:0s" aria-hidden="true"><span class="sticker__body"><svg viewBox="-10 -10 90 90"><use href="#st-star" filter="url(#diecut)"/></svg></span></span>
       <div class="container how__grid">
         <div class="how__scene">
           <div class="scene-slot scene-slot--launch" data-scene="launch" aria-hidden="true"></div>
@@ -228,6 +322,8 @@
 
     <!-- ================= SPEC SHEET ================= -->
     <section class="section specs" id="specs" aria-labelledby="specs-title">
+      <span class="sticker sticker--peel" data-sticker data-parallax="0.14" data-spin="0.3" style="--mx:78%;--my:4%;--x:84%;--y:8%;--w:84px;--r:10deg;--delay:0s" aria-hidden="true"><span class="sticker__body"><svg viewBox="-10 -10 112 126"><use href="#st-shield" filter="url(#diecut)"/></svg></span></span>
+      <span class="sticker sticker--desk" data-sticker data-parallax="0.22" style="--x:79%;--y:6%;--w:26px;--r:-14deg;--delay:0s" aria-hidden="true"><span class="sticker__body"><svg viewBox="-8 -8 56 56"><use href="#st-square" filter="url(#diecut)"/></svg></span></span>
       <div class="container">
         <header class="section__head section__head--left" data-reveal>
           <p class="label mono">04 / Spec sheet</p>
@@ -235,16 +331,16 @@
           <p class="section__lead">The detail, laid out clearly.</p>
         </header>
         <dl class="specs__grid">
-          <div class="spec" data-reveal><dt class="mono">Deployment</dt><dd>Cloud-hosted or dedicated environment</dd></div>
-          <div class="spec" data-reveal><dt class="mono">Trading platforms</dt><dd>Connectivity for leading Forex &amp; CFD platforms</dd></div>
-          <div class="spec" data-reveal><dt class="mono">Client portal</dt><dd>White-label Trader's Room, mobile-ready</dd></div>
-          <div class="spec" data-reveal><dt class="mono">Partners</dt><dd>Multi-level IB, rebates, referral tracking</dd></div>
-          <div class="spec" data-reveal><dt class="mono">Payments</dt><dd>PSP &amp; crypto gateways, multi-currency wallets</dd></div>
-          <div class="spec" data-reveal><dt class="mono">Compliance</dt><dd>KYC/AML workflows, document vault, audit logs</dd></div>
-          <div class="spec" data-reveal><dt class="mono">Security</dt><dd>Role-based access, 2FA, encrypted data, activity logs</dd></div>
-          <div class="spec" data-reveal><dt class="mono">Localisation</dt><dd>Multi-language, multi-currency, multi-entity</dd></div>
-          <div class="spec" data-reveal><dt class="mono">Integrations</dt><dd>REST API, webhooks, email, SMS &amp; telephony</dd></div>
-          <div class="spec" data-reveal><dt class="mono">Support</dt><dd>Dedicated onboarding &amp; technical support</dd></div>
+          <div class="spec" data-fold><dt class="mono">Deployment</dt><dd>Cloud-hosted or dedicated environment</dd></div>
+          <div class="spec" data-fold><dt class="mono">Trading platforms</dt><dd>Connectivity for leading Forex &amp; CFD platforms</dd></div>
+          <div class="spec" data-fold><dt class="mono">Client portal</dt><dd>White-label Trader's Room, mobile-ready</dd></div>
+          <div class="spec" data-fold><dt class="mono">Partners</dt><dd>Multi-level IB, rebates, referral tracking</dd></div>
+          <div class="spec" data-fold><dt class="mono">Payments</dt><dd>PSP &amp; crypto gateways, multi-currency wallets</dd></div>
+          <div class="spec" data-fold><dt class="mono">Compliance</dt><dd>KYC/AML workflows, document vault, audit logs</dd></div>
+          <div class="spec" data-fold><dt class="mono">Security</dt><dd>Role-based access, 2FA, encrypted data, activity logs</dd></div>
+          <div class="spec" data-fold><dt class="mono">Localisation</dt><dd>Multi-language, multi-currency, multi-entity</dd></div>
+          <div class="spec" data-fold><dt class="mono">Integrations</dt><dd>REST API, webhooks, email, SMS &amp; telephony</dd></div>
+          <div class="spec" data-fold><dt class="mono">Support</dt><dd>Dedicated onboarding &amp; technical support</dd></div>
         </dl>
         <p class="specs__note" data-reveal>Specifications are representative. The exact scope for your brokerage is confirmed during your demo.</p>
       </div>
@@ -268,6 +364,8 @@
         </div>
 
         <form class="card form" id="demo-form" data-reveal novalidate>
+          <span class="tape" aria-hidden="true"></span>
+          <span class="sticker" data-sticker data-parallax="0.06" style="--x:78%;--y:-10%;--w:138px;--r:8deg;--delay:0s" aria-hidden="true"><span class="sticker__body"><svg viewBox="-10 -10 176 108"><use href="#st-talk" filter="url(#diecut)"/></svg></span></span>
           <div class="form__row">
             <label>Full name<input type="text" name="name" autocomplete="name" required placeholder="Jordan Lee" aria-describedby="err-name" /><span class="form__error" id="err-name"></span></label>
             <label>Work email<input type="email" name="email" autocomplete="email" required placeholder="you@brokerage.com" aria-describedby="err-email" /><span class="form__error" id="err-email"></span></label>
@@ -299,7 +397,11 @@
     </section>
 
     <!-- ================= FAQ ================= -->
+    <div class="fold-strip" data-strip aria-hidden="true"></div>
+
     <section class="section section--pearl faq" id="faq" aria-labelledby="faq-title">
+      <span class="origami origami--desk" data-origami data-parallax="0.1" data-spin="0.2" style="--x:6%;--y:60%;--w:180px;--r:-4deg" aria-hidden="true"><svg viewBox="0 0 200 130"><polygon class="fold" style="--d:0" points="100,8 100,72 46,72" fill="#E9EEFF"/><polygon class="fold" style="--d:1" points="100,8 100,72 154,72" fill="#1236CC"/><polygon class="fold" style="--d:2" points="100,40 72,72 128,72" fill="#ffffff"/><polygon class="fold" style="--d:3" points="16,72 184,72 152,112 48,112" fill="#204BFF"/><polygon class="fold" style="--d:4" points="100,72 184,72 152,112" fill="#1236CC"/><polygon class="fold" style="--d:5" points="100,8 120,16 100,24" fill="#F66B24"/></svg></span>
+      <span class="origami origami--desk" data-origami data-parallax="0.18" data-spin="0.9" style="--x:25%;--y:78%;--w:92px;--r:12deg" aria-hidden="true"><svg viewBox="0 0 160 160"><polygon class="fold" style="--d:0" points="80,6 80,80 6,80" fill="#204BFF"/><polygon class="fold" style="--d:1" points="80,6 154,80 80,80" fill="#E9EEFF"/><polygon class="fold" style="--d:2" points="6,80 80,80 80,154" fill="#1236CC"/><polygon class="fold" style="--d:3" points="80,80 154,80 80,154" fill="#202630"/><path class="fold" style="--d:4" d="M80 6V154M6 80H154" stroke="#fff" stroke-opacity=".5" stroke-width="2"/><rect class="fold" style="--d:5" x="104" y="104" width="14" height="14" fill="#F66B24"/></svg></span>
       <div class="container faq__grid">
         <header class="section__head section__head--left" data-reveal>
           <p class="label mono">06 / FAQ</p>
@@ -347,6 +449,8 @@
             <a class="btn btn--outline-white btn--lg" href="#platform">Explore our technology</a>
           </div>
           <span class="cta__square" aria-hidden="true"></span>
+          <span class="sticker sticker--desk sticker--peel" data-sticker data-parallax="0.08" data-spin="0.3" style="--x:73%;--y:14%;--w:128px;--r:10deg;--delay:0s" aria-hidden="true"><span class="sticker__body"><svg viewBox="-10 -22 140 132"><use href="#st-face" filter="url(#diecut)"/></svg></span></span>
+          <span class="sticker sticker--desk" data-sticker data-parallax="0.12" data-spin="-0.3" style="--x:60%;--y:56%;--w:116px;--r:-10deg;--delay:0s" aria-hidden="true"><span class="sticker__body"><svg viewBox="-10 -10 160 110"><use href="#st-plane" filter="url(#diecut)"/></svg></span></span>
         </div>
       </div>
     </section>
@@ -381,6 +485,7 @@
 
   <script src="js/reveal.js" defer></script>
   <script src="js/main.js" defer></script>
+  <script src="js/motion.js" defer></script>
   <script src="js/scene.bundle.js" defer></script>
 </body>
 </html>

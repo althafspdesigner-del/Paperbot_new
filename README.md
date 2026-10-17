@@ -59,6 +59,26 @@ paper-fibre texture (`makePaperTexture`), darker crease lines on every sharp
 edge (`withFolds`) and chamfered "folded" boxes (`paperBoxGeo`). Colours live
 in the `PAPER` palette object.
 
+## Paper & sticker layer
+
+Apart from the robot, rocket and orbit, everything reads as folded paper or a
+die-cut sticker:
+
+- **Stickers** (`[data-sticker]`, artwork in the inline `#st-*` SVG symbols):
+  robot face, origami plane, EUR/USD ticket, candles, FX coin, holographic KYC
+  shield, `{ API }` pill, speech bubble, sparkle, orange square. The `#diecut`
+  SVG filter adds the white border. They slap onto the page as they scroll in,
+  drift with scroll, and on desktop can be picked up and moved.
+- **Origami** (`[data-origami]`): crane, pinwheel, boat and fortune teller whose
+  facets unfold into place, plus accordion paper strips between sections.
+- **Paper folds**: platform cards and spec rows unfold from a top crease
+  (`[data-fold]`), FAQ answers unfold like a note, the form is taped to the page.
+- Section labels, marquee items, card-icon tiles and step numbers are styled
+  as sticker chips.
+
+`js/motion.js` drives all of it; everything is visible without JavaScript and
+static under reduced motion.
+
 ## Edit the page
 
 - `index.html` — all copy and sections. Brand/CSS colours are the custom
