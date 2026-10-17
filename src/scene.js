@@ -820,7 +820,7 @@ const ICONS = {
     const base = paperBox(1.7, 0.1, 0.8, pal.paper, 0.03);
     base.position.y = -0.7;
     g.add(base);
-    [[-0.55, 0.5, pal.paper], [-0.18, 0.9, pal.accent], [0.18, 0.7, pal.paper], [0.55, 1.25, pal.ink]].forEach(([x, h, c]) => {
+    [[-0.55, 0.55, pal.accent], [-0.18, 0.85, pal.paper], [0.18, 1.0, pal.accent], [0.55, 1.3, pal.ink]].forEach(([x, h, c]) => {
       const bar = paperBox(0.26, h, 0.26, c, 0.03);
       bar.position.set(x, -0.65 + h / 2, 0);
       g.add(bar);
@@ -828,8 +828,8 @@ const ICONS = {
     const sq = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.16, 0.16), paperMat(PAPER.orange));
     sq.position.set(0.55, 0.75, 0);
     g.add(sq);
-    g.rotation.x = -0.3;
-    g.rotation.y = -0.4;
+    g.rotation.x = -0.25;
+    g.rotation.y = -0.55;
     return g;
   },
   // Open API: folded brackets around a slash.
