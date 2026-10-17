@@ -6,6 +6,8 @@
    [data-fold]      paper cards / rows: unfold from a top crease as they enter.
    [data-strip]     accordion paper strips: open sideways as they enter.
    [data-parallax]  drift with scroll at the given rate (and rotate by data-spin).
+   [data-pin]       pinned notes: drop onto the board, then the pin presses in;
+                    dashed links between the notes draw in as you scroll.
 
    Everything is visible without JavaScript and static under reduced motion. */
 (function () {
@@ -39,7 +41,7 @@
     }
   }
 
-  var targets = document.querySelectorAll("[data-sticker], [data-origami], [data-fold], [data-strip]");
+  var targets = document.querySelectorAll("[data-sticker], [data-origami], [data-fold], [data-strip], [data-pin]");
   if (reduce || !("IntersectionObserver" in window)) {
     targets.forEach(show);
   } else {
@@ -93,6 +95,84 @@
     window.addEventListener("resize", queue);
     update();
   }
+
+  /* ---------- Dashed links between pinned notes ---------- */
+  var NS = "http://www.w3.org/2000/svg";
+  document.querySelectorAll(".notes-board").forEach(function (board, b) {
+    var svg = board.querySelector(".notes__links");
+    var notes = board.querySelectorAll(".note");
+    if (!svg || notes.length < 2) return;
+    var links = [];
+
+    var build = function () {
+      svg.textContent = "";
+      links = [];
+      var br = board.getBoundingClientRect();
+      var defs = document.createElementNS(NS, "defs");
+      svg.appendChild(defs);
+      for (var i = 0; i < notes.length - 1; i++) {
+        var a = notes[i].getBoundingClientRect();
+        var c = notes[i + 1].getBoundingClientRect();
+        var pin = notes[i + 1].querySelector(".pin").getBoundingClientRect();
+        var ex = pin.left + pin.width / 2 - br.left, ey = pin.top + pin.height / 2 - br.top;
+        var d, sy;
+        var right = c.left + c.width / 2 > a.left + a.width / 2; // next note sits to the right
+        var gy = (a.bottom + c.top) / 2 - br.top; // middle of the gap between the notes
+        var free = right ? br.right - a.right : a.left - br.left;
+        if (free > 60) {
+          // Leave from the free side of this note, loop out, then run along the gap into the next pin.
+          var dir = right ? 1 : -1, k = Math.min(80, free - 16) * dir;
+          var sx = (right ? a.right : a.left) - br.left;
+          sy = a.bottom - br.top - 70;
+          d = "M" + sx + " " + sy + "C" + (sx + k) + " " + sy + " " + (sx + k) + " " + gy + " " + sx + " " + gy +
+            "C" + (sx - 40 * dir) + " " + gy + " " + ex + " " + gy + " " + ex + " " + ey;
+        } else {
+          sy = a.bottom - br.top - 2;
+          d = "M" + (ex - 30) + " " + sy + "C" + (ex - 30) + " " + gy + " " + ex + " " + gy + " " + ex + " " + ey;
+        }
+        var id = "nl-" + b + "-" + i;
+        var mask = document.createElementNS(NS, "mask");
+        mask.setAttribute("id", id);
+        mask.setAttribute("maskUnits", "userSpaceOnUse");
+        var mp = document.createElementNS(NS, "path");
+        mp.setAttribute("class", "link-mask");
+        mp.setAttribute("d", d);
+        mp.setAttribute("pathLength", "1");
+        mp.setAttribute("stroke-dasharray", "1 1");
+        mask.appendChild(mp);
+        defs.appendChild(mask);
+        var path = document.createElementNS(NS, "path");
+        path.setAttribute("class", "link");
+        path.setAttribute("d", d);
+        path.setAttribute("mask", "url(#" + id + ")");
+        svg.appendChild(path);
+        links.push({ mask: mp, y0: sy, y1: ey });
+      }
+      draw();
+    };
+
+    var draw = function () {
+      var top = board.getBoundingClientRect().top;
+      var line = window.innerHeight * 0.72; // the link is drawn up to this point of the viewport
+      for (var i = 0; i < links.length; i++) {
+        var l = links[i];
+        var t = reduce ? 1 : (line - (top + l.y0)) / Math.max(1, l.y1 - l.y0);
+        t = Math.max(0, Math.min(1, t));
+        l.mask.setAttribute("stroke-dashoffset", String(1 - t));
+      }
+    };
+
+    var queued = false;
+    window.addEventListener("scroll", function () {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(function () { queued = false; draw(); });
+    }, { passive: true });
+    if ("ResizeObserver" in window) new ResizeObserver(build).observe(board);
+    else window.addEventListener("resize", build);
+    build();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
+  });
 
   /* ---------- Pick up and move stickers (mouse / pen only) ---------- */
   if (fine) {

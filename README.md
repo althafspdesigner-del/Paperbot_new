@@ -31,7 +31,9 @@ Import a repository**, pick this repo, leave the build command empty and keep
 the deploy command `npx wrangler deploy`. Every push to `main` redeploys. Or
 from a machine with Cloudflare access: `npm install && npm run deploy`.
 `.assetsignore` keeps sources and config out of the upload; `_headers` sets
-cache and security headers.
+cache and security headers. Browsers re-check CSS and JS on every visit, and
+`index.html` links them with a `?v=` tag. Bump that tag when you change a
+stylesheet or script so returning visitors get the new file.
 
 ## Edit the 3D scenes
 

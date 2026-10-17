@@ -1,9 +1,15 @@
+# CSS and JS links carry a ?v= tag, and browsers re-check them on every
+# visit, so a new deploy shows up straight away.
 /js/*
-  Cache-Control: public, max-age=604800
+  Cache-Control: public, max-age=0, must-revalidate
 /css/*
-  Cache-Control: public, max-age=604800
+  Cache-Control: public, max-age=0, must-revalidate
 /assets/*
-  Cache-Control: public, max-age=2592000
+  Cache-Control: public, max-age=86400
+/
+  Cache-Control: public, max-age=0, must-revalidate
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
