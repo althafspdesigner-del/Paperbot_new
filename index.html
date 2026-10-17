@@ -22,6 +22,7 @@
 
   <!-- One transparent WebGL canvas behind the page. Scenes are drawn into [data-scene] slots. -->
   <canvas id="gl" aria-hidden="true"></canvas>
+  <canvas id="gl-top" aria-hidden="true"></canvas>
 
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <defs>
@@ -118,7 +119,7 @@
 
         <div class="bento">
           <article class="card card--feature tilt" style="grid-area:crm" data-reveal>
-            <div class="card__icon"><svg width="30" height="30" aria-hidden="true"><use href="#i-crm"/></svg></div>
+            <div class="card__icon scene-slot" data-scene="icon" data-icon="crm" aria-hidden="true"><svg class="card__icon-fallback" width="30" height="30"><use href="#i-crm"/></svg></div>
             <h3>Forex CRM</h3>
             <p>A single source of truth for every lead, client and account. Pipelines, tasks, automations and client timelines for sales and retention teams.</p>
             <ul class="card__list">
@@ -130,13 +131,13 @@
           </article>
 
           <article class="card tilt" style="grid-area:room" data-reveal>
-            <div class="card__icon"><svg width="30" height="30" aria-hidden="true"><use href="#i-portal"/></svg></div>
+            <div class="card__icon scene-slot" data-scene="icon" data-icon="room" aria-hidden="true"><svg class="card__icon-fallback" width="30" height="30"><use href="#i-portal"/></svg></div>
             <h3>Trader's Room</h3>
             <p>A branded client portal for registration, deposits, withdrawals, account management and documents, on web and mobile.</p>
           </article>
 
           <article class="card card--tall card--cobalt tilt" style="grid-area:ib" data-reveal>
-            <div class="card__icon"><svg width="30" height="30" aria-hidden="true"><use href="#i-network"/></svg></div>
+            <div class="card__icon scene-slot" data-scene="icon" data-icon="ib" aria-hidden="true"><svg class="card__icon-fallback" width="30" height="30"><use href="#i-network"/></svg></div>
             <h3>IB &amp; Partner Program</h3>
             <p>Multi-level IB structures, rebates, commissions, referral links and partner dashboards that settle automatically.</p>
             <div class="card__art card__art--tree" aria-hidden="true">
@@ -147,32 +148,32 @@
           </article>
 
           <article class="card tilt" style="grid-area:conn" data-reveal>
-            <div class="card__icon"><svg width="30" height="30" aria-hidden="true"><use href="#i-plug"/></svg></div>
+            <div class="card__icon scene-slot" data-scene="icon" data-icon="conn" aria-hidden="true"><svg class="card__icon-fallback" width="30" height="30"><use href="#i-plug"/></svg></div>
             <h3>Trading platform connectivity</h3>
             <p>Bridges to the trading platforms your desk runs: account creation, balance operations, real-time trade data and reporting.</p>
           </article>
 
           <article class="card tilt" style="grid-area:pay" data-reveal>
-            <div class="card__icon"><svg width="30" height="30" aria-hidden="true"><use href="#i-wallet"/></svg></div>
+            <div class="card__icon scene-slot" data-scene="icon" data-icon="pay" aria-hidden="true"><svg class="card__icon-fallback" width="30" height="30"><use href="#i-wallet"/></svg></div>
             <h3>Payments &amp; wallets</h3>
             <p>PSP integrations, multi-currency wallets, internal transfers and configurable deposit and withdrawal workflows.</p>
           </article>
 
           <article class="card tilt" style="grid-area:kyc" data-reveal>
-            <div class="card__icon"><svg width="30" height="30" aria-hidden="true"><use href="#i-shield"/></svg></div>
+            <div class="card__icon scene-slot" data-scene="icon" data-icon="kyc" aria-hidden="true"><svg class="card__icon-fallback" width="30" height="30"><use href="#i-shield"/></svg></div>
             <h3>Compliance &amp; KYC</h3>
             <p>Document collection, verification providers, risk scoring and audit trails for your regulators and your ops team.</p>
           </article>
 
           <article class="card card--wide tilt" style="grid-area:ops" data-reveal>
-            <div class="card__icon"><svg width="30" height="30" aria-hidden="true"><use href="#i-chart"/></svg></div>
+            <div class="card__icon scene-slot" data-scene="icon" data-icon="ops" aria-hidden="true"><svg class="card__icon-fallback" width="30" height="30"><use href="#i-chart"/></svg></div>
             <h3>Back office, risk &amp; reporting</h3>
             <p>Dealing desk tools, exposure monitoring, bonus engines and real-time BI across sales, finance and dealing, from the same login.</p>
             <div class="card__art card__art--bars" aria-hidden="true"><i style="--h:40%"></i><i style="--h:65%"></i><i style="--h:50%"></i><i style="--h:85%"></i><i style="--h:70%"></i><i style="--h:95%"></i></div>
           </article>
 
           <article class="card tilt" style="grid-area:api" data-reveal>
-            <div class="card__icon"><svg width="30" height="30" aria-hidden="true"><use href="#i-api"/></svg></div>
+            <div class="card__icon scene-slot" data-scene="icon" data-icon="api" aria-hidden="true"><svg class="card__icon-fallback" width="30" height="30"><use href="#i-api"/></svg></div>
             <h3>Open API</h3>
             <p>REST APIs and webhooks so your own apps, bots and partners plug straight into the platform.</p>
           </article>

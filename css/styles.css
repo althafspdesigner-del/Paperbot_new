@@ -51,6 +51,7 @@ body {
 /* The WebGL canvas sits above the hero backgrounds but below section content
    (sections get z-index 2; the hero frame and giant word stay underneath). */
 #gl { position: fixed; inset: 0; z-index: 1; width: 100%; height: 100%; pointer-events: none; }
+#gl-top { position: fixed; inset: 0; z-index: 3; width: 100%; height: 100%; pointer-events: none; } /* card icons, above card backgrounds, below the nav */
 main, footer { position: relative; }
 main > .section, footer { position: relative; z-index: 2; }
 
@@ -234,7 +235,8 @@ main:focus { outline: none; }
 }
 .card h3 { margin: 20px 0 10px; }
 .card p { color: var(--muted); font-size: 0.98rem; }
-.card__icon { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; color: var(--cobalt); background: var(--tint); }
+.card__icon { width: 76px; height: 76px; border-radius: 18px; display: grid; place-items: center; color: var(--cobalt); background: var(--tint); }
+.gl-ready .card__icon-fallback { visibility: hidden; }
 .card__list { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 8px; font-size: 0.95rem; font-weight: 500; color: var(--graphite); }
 .card__list li { display: flex; align-items: center; gap: 10px; }
 .card__list li::before { content: ""; width: 7px; height: 7px; background: var(--cobalt); flex: none; }

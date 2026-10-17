@@ -667,50 +667,300 @@ function coreScene(slot) {
 }
 
 /* ------------------------------------------------------------------ */
+/*  Card icons: small paper-craft objects, one per platform card       */
+/* ------------------------------------------------------------------ */
+
+function extrudeShape(shape, depth, bevel = 0.03) {
+  const g = new THREE.ExtrudeGeometry(shape, { depth, bevelEnabled: bevel > 0, bevelThickness: bevel, bevelSize: bevel, bevelSegments: 1, curveSegments: 4 });
+  g.center();
+  return g;
+}
+
+const ICONS = {
+  // Forex CRM: a stack of three folded record cards.
+  crm(pal) {
+    const g = new THREE.Group();
+    const specs = [
+      [pal.accent, -0.02, -0.22, 0.12, -0.12],
+      [pal.tint, 0.06, -0.08, -0.05, 0.08],
+      [pal.paper, 0, 0.08, 0.02, -0.03],
+    ];
+    specs.forEach(([c, x, y, rz, ry], i) => {
+      const card = paperBox(1.35, 0.9, 0.05, c, 0.02);
+      card.position.set(x, y, i * 0.1);
+      card.rotation.set(0, ry, rz);
+      g.add(card);
+    });
+    const line = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.07, 0.02), paperMat(pal.ink));
+    line.position.set(-0.3, 0.3, 0.26);
+    line.rotation.z = -0.03;
+    g.add(line);
+    const sq = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.14, 0.03), paperMat(PAPER.orange));
+    sq.position.set(0.5, 0.3, 0.26);
+    g.add(sq);
+    g.rotation.x = -0.35;
+    return g;
+  },
+  // Trader's Room: a browser window with a screen.
+  room(pal) {
+    const g = new THREE.Group();
+    g.add(paperBox(1.6, 1.15, 0.14, pal.paper, 0.04));
+    const screen = new THREE.Mesh(new THREE.BoxGeometry(1.36, 0.72, 0.04), paperMat(pal.ink));
+    screen.position.set(0, -0.1, 0.08);
+    g.add(screen);
+    [-0.6, -0.45].forEach((x, i) => {
+      const dot = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.03, 8), paperMat(i ? pal.accent : PAPER.orange));
+      dot.rotation.x = Math.PI / 2;
+      dot.position.set(x, 0.42, 0.09);
+      g.add(dot);
+    });
+    const row = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.08, 0.02), paperMat(pal.paper));
+    row.position.set(-0.3, 0.05, 0.11);
+    g.add(row);
+    const bar = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.08, 0.02), paperMat(pal.accent));
+    bar.position.set(-0.2, -0.15, 0.11);
+    g.add(bar);
+    const chip = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.18, 0.02), paperMat(PAPER.orange));
+    chip.position.set(0.42, -0.3, 0.11);
+    g.add(chip);
+    g.rotation.x = -0.2;
+    return g;
+  },
+  // IB & Partner Program: a hub with three partners and paper links.
+  ib(pal) {
+    const g = new THREE.Group();
+    const hub = withFolds(new THREE.Mesh(new THREE.IcosahedronGeometry(0.34, 0), paperMat(PAPER.orange)));
+    hub.position.y = 0.35;
+    g.add(hub);
+    [-0.75, 0, 0.75].forEach((x) => {
+      const node = withFolds(new THREE.Mesh(new THREE.IcosahedronGeometry(0.22, 0), paperMat(pal.paper)));
+      node.position.set(x, -0.5, 0);
+      g.add(node);
+      const dir = new THREE.Vector3(x, -0.5, 0).sub(hub.position);
+      const len = dir.length();
+      const link = new THREE.Mesh(new THREE.BoxGeometry(0.06, len - 0.5, 0.03), paperMat(pal.link));
+      link.position.copy(hub.position).add(dir.multiplyScalar(0.5));
+      link.rotation.z = Math.atan2(dir.y, dir.x) + Math.PI / 2;
+      g.add(link);
+    });
+    return g;
+  },
+  // Trading platform connectivity: a paper plug with its cable.
+  conn(pal) {
+    const g = new THREE.Group();
+    const body = paperBox(0.95, 0.75, 0.5, pal.accent, 0.05);
+    body.position.y = -0.15;
+    g.add(body);
+    [-0.22, 0.22].forEach((x) => {
+      const prong = paperBox(0.14, 0.5, 0.14, pal.paper, 0.02);
+      prong.position.set(x, 0.42, 0);
+      g.add(prong);
+    });
+    const cable = withFolds(new THREE.Mesh(new THREE.TorusGeometry(0.42, 0.07, 4, 10, Math.PI), paperMat(pal.paper)), 30);
+    cable.rotation.z = Math.PI;
+    cable.position.set(0, -0.55, 0);
+    g.add(cable);
+    const tip = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.16, 0.16), paperMat(PAPER.orange));
+    tip.position.set(0.42, -0.72, 0);
+    g.add(tip);
+    g.rotation.z = 0.35;
+    g.rotation.x = -0.25;
+    return g;
+  },
+  // Payments & wallets: a folded wallet with a coin.
+  pay(pal) {
+    const g = new THREE.Group();
+    const wallet = paperBox(1.5, 1.0, 0.34, pal.accent, 0.06);
+    g.add(wallet);
+    const flap = paperBox(1.5, 0.42, 0.1, pal.accentDeep, 0.03);
+    flap.position.set(0, 0.2, 0.2);
+    g.add(flap);
+    const clasp = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.2, 0.06), paperMat(PAPER.orange));
+    clasp.position.set(0.45, 0.2, 0.27);
+    g.add(clasp);
+    const coin = withFolds(new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 0.06, 12), paperMat(pal.paper)), 30);
+    coin.rotation.x = Math.PI / 2;
+    coin.position.set(-0.35, 0.65, 0.05);
+    g.add(coin);
+    const card = paperBox(0.9, 0.55, 0.03, pal.tint, 0.01);
+    card.position.set(0.35, 0.6, -0.08);
+    card.rotation.z = -0.15;
+    g.add(card);
+    g.rotation.x = -0.3;
+    return g;
+  },
+  // Compliance & KYC: a folded shield with a check.
+  kyc(pal) {
+    const g = new THREE.Group();
+    const s = new THREE.Shape();
+    s.moveTo(0, 0.8);
+    s.lineTo(0.7, 0.55);
+    s.lineTo(0.62, -0.2);
+    s.quadraticCurveTo(0.45, -0.65, 0, -0.85);
+    s.quadraticCurveTo(-0.45, -0.65, -0.62, -0.2);
+    s.lineTo(-0.7, 0.55);
+    s.closePath();
+    g.add(withFolds(new THREE.Mesh(extrudeShape(s, 0.18, 0.04), paperMat(pal.accent)), 25));
+    const a = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.1, 0.06), paperMat(pal.paper));
+    a.position.set(-0.17, -0.12, 0.16);
+    a.rotation.z = Math.PI / 4;
+    const b = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.1, 0.06), paperMat(pal.paper));
+    b.position.set(0.12, 0.02, 0.16);
+    b.rotation.z = -Math.PI / 4;
+    g.add(a, b);
+    const sq = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.14, 0.06), paperMat(PAPER.orange));
+    sq.position.set(0.5, 0.6, 0.16);
+    g.add(sq);
+    g.rotation.x = -0.2;
+    return g;
+  },
+  // Back office, risk & reporting: a paper bar chart.
+  ops(pal) {
+    const g = new THREE.Group();
+    const base = paperBox(1.7, 0.1, 0.8, pal.paper, 0.03);
+    base.position.y = -0.7;
+    g.add(base);
+    [[-0.55, 0.5, pal.paper], [-0.18, 0.9, pal.accent], [0.18, 0.7, pal.paper], [0.55, 1.25, pal.ink]].forEach(([x, h, c]) => {
+      const bar = paperBox(0.26, h, 0.26, c, 0.03);
+      bar.position.set(x, -0.65 + h / 2, 0);
+      g.add(bar);
+    });
+    const sq = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.16, 0.16), paperMat(PAPER.orange));
+    sq.position.set(0.55, 0.75, 0);
+    g.add(sq);
+    g.rotation.x = -0.3;
+    g.rotation.y = -0.4;
+    return g;
+  },
+  // Open API: folded brackets around a slash.
+  api(pal) {
+    const g = new THREE.Group();
+    const chevron = (dir) => {
+      const s = new THREE.Shape();
+      s.moveTo(0, 0);
+      s.lineTo(0.42 * dir, 0.5);
+      s.lineTo(0.42 * dir, 0.3);
+      s.lineTo(0.16 * dir, 0);
+      s.lineTo(0.42 * dir, -0.3);
+      s.lineTo(0.42 * dir, -0.5);
+      s.closePath();
+      return withFolds(new THREE.Mesh(extrudeShape(s, 0.16, 0.03), paperMat(pal.accent)), 25);
+    };
+    const l = chevron(1);
+    l.position.x = -0.55;
+    const r = chevron(-1);
+    r.position.x = 0.55;
+    g.add(l, r);
+    const slash = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.95, 0.16), paperMat(PAPER.orange));
+    slash.rotation.z = 0.45;
+    g.add(withFolds(slash, 25));
+    g.rotation.x = -0.15;
+    return g;
+  },
+};
+
+function iconScene(slot) {
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 20);
+  camera.position.set(0, 0.1, 4.3);
+  addStudioLights(scene);
+
+  const onCobalt = !!slot.closest(".card--cobalt");
+  const pal = onCobalt
+    ? { paper: PAPER.white, tint: PAPER.blueTint, accent: PAPER.white, accentDeep: PAPER.pearl, ink: PAPER.graphite, link: PAPER.blueTint }
+    : { paper: PAPER.white, tint: PAPER.blueTint, accent: PAPER.cobalt, accentDeep: PAPER.deepCobalt, ink: PAPER.graphite, link: PAPER.cobalt };
+
+  const build = ICONS[slot.dataset.icon] || ICONS.crm;
+  const obj = build(pal);
+  const pivot = new THREE.Group();
+  pivot.add(obj);
+  scene.add(pivot);
+  const baseX = obj.rotation.x;
+  const baseZ = obj.rotation.z;
+
+  // Spin faster and lift while the owning card is hovered.
+  let hovered = false;
+  const card = slot.closest(".card");
+  if (card) {
+    card.addEventListener("pointerenter", () => (hovered = true));
+    card.addEventListener("pointerleave", () => (hovered = false));
+  }
+  let spin = 0;
+  let lift = 0;
+  const seed = Math.random() * Math.PI * 2;
+
+  function update(t, dt) {
+    if (reduceMotion) {
+      pivot.rotation.y = -0.35;
+      return;
+    }
+    const targetSpeed = hovered ? 2.2 : 0.35;
+    spin += (targetSpeed - (spin || 0)) * Math.min(1, dt * 4);
+    pivot.rotation.y += spin * dt;
+    lift += ((hovered ? 1 : 0) - lift) * Math.min(1, dt * 6);
+    pivot.position.y = Math.sin(t * 1.4 + seed) * 0.05 + lift * 0.12;
+    obj.rotation.x = baseX + Math.sin(t * 0.9 + seed) * 0.06 - lift * 0.15;
+    obj.rotation.z = baseZ + Math.sin(t * 0.7 + seed) * 0.03;
+  }
+
+  return { scene, camera, update, slot };
+}
+
+/* ------------------------------------------------------------------ */
 /*  Renderer loop (one canvas, many slots)                             */
 /* ------------------------------------------------------------------ */
 
 function init() {
-  const canvas = document.getElementById("gl");
-  if (!canvas) return;
+  // Two transparent canvases: #gl sits behind page content (hero, rocket,
+  // core), #gl-top sits above it (the small card icons, which would otherwise
+  // be hidden by the cards' own backgrounds). One render loop drives both.
+  const layerDefs = [
+    { canvas: document.getElementById("gl"), scenes: ["hero", "launch", "core"] },
+    { canvas: document.getElementById("gl-top"), scenes: ["icon"] },
+  ].filter((l) => l.canvas);
+  if (!layerDefs.length) return;
 
-  let renderer;
-  try {
-    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "high-performance" });
-  } catch (e) {
-    document.documentElement.classList.add("no-webgl");
-    return;
+  const factories = { hero: heroScene, launch: launchScene, core: coreScene, icon: iconScene };
+  const layers = [];
+  for (const def of layerDefs) {
+    let renderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ canvas: def.canvas, antialias: true, alpha: true, powerPreference: "high-performance" });
+    } catch (e) {
+      document.documentElement.classList.add("no-webgl");
+      return;
+    }
+    renderer.setClearColor(0x000000, 0);
+    renderer.toneMapping = THREE.NeutralToneMapping; // keeps brand colours true
+    renderer.toneMappingExposure = 1.12;
+    renderer.setScissorTest(true);
+    layers.push({ renderer, canvas: def.canvas, scenes: def.scenes, views: [], idleCleared: false, lastW: 0, lastH: 0, lastDpr: 0 });
   }
-  renderer.setClearColor(0x000000, 0);
   paperTex = makePaperTexture();
-  renderer.toneMapping = THREE.NeutralToneMapping; // keeps brand colours true
-  renderer.toneMappingExposure = 1.12;
-  renderer.setScissorTest(true);
 
-  const factories = { hero: heroScene, launch: launchScene, core: coreScene };
-  const views = [];
   document.querySelectorAll("[data-scene]").forEach((slot) => {
-    const f = factories[slot.dataset.scene];
-    if (f) views.push(f(slot));
+    const kind = slot.dataset.scene;
+    const f = factories[kind];
+    const layer = layers.find((l) => l.scenes.includes(kind));
+    if (f && layer) layer.views.push(f(slot));
   });
-  if (!views.length) return;
+  if (!layers.some((l) => l.views.length)) return;
 
-  let lastW = 0;
-  let lastH = 0;
-  let lastDpr = 0;
   function resize() {
     const w = window.innerWidth;
     const h = window.innerHeight;
     // Cap the backbuffer at ~3.5 MP so a full-viewport canvas stays cheap on big/high-DPI screens.
     const dpr = Math.min(window.devicePixelRatio || 1, isCoarse ? 1.5 : 2, Math.sqrt(3.5e6 / Math.max(1, w * h)));
-    if (w === lastW && h === lastH && dpr === lastDpr) return;
-    lastW = w;
-    lastH = h;
-    lastDpr = dpr;
-    renderer.setPixelRatio(dpr);
-    renderer.setSize(w, h, false);
-    canvas.style.width = w + "px";
-    canvas.style.height = h + "px";
+    for (const L of layers) {
+      if (w === L.lastW && h === L.lastH && dpr === L.lastDpr) continue;
+      L.lastW = w;
+      L.lastH = h;
+      L.lastDpr = dpr;
+      L.renderer.setPixelRatio(dpr);
+      L.renderer.setSize(w, h, false);
+      L.canvas.style.width = w + "px";
+      L.canvas.style.height = h + "px";
+    }
   }
   resize();
   window.addEventListener("resize", resize);
@@ -719,18 +969,11 @@ function init() {
   // is clamped, so returning to the tab simply resumes where it left off.
   const clock = new THREE.Clock();
   let time = 0;
-  let idleCleared = false;
 
-  function frame() {
-    requestAnimationFrame(frame);
-    const dt = Math.min(clock.getDelta(), 0.05);
-    time += dt;
-    const t = time;
-    const vh = window.innerHeight;
-    const vw = window.innerWidth;
-
+  function renderLayer(L, t, dt, vw, vh) {
+    const { renderer } = L;
     const visible = [];
-    for (const v of views) {
+    for (const v of L.views) {
       const r = v.slot.getBoundingClientRect();
       if (r.bottom < 0 || r.top > vh || r.right < 0 || r.left > vw || r.width < 2 || r.height < 2) continue;
       visible.push([v, r]);
@@ -738,15 +981,15 @@ function init() {
 
     // Nothing on screen: clear once, then skip GPU work until a slot is visible again.
     if (!visible.length) {
-      if (!idleCleared) {
+      if (!L.idleCleared) {
         renderer.setScissorTest(false);
         renderer.clear();
         renderer.setScissorTest(true);
-        idleCleared = true;
+        L.idleCleared = true;
       }
       return;
     }
-    idleCleared = false;
+    L.idleCleared = false;
 
     // Clear the entire canvas first; scissored renders only clear their own
     // rectangle, so a slot that scrolled off-screen would leave stale pixels.
@@ -769,6 +1012,15 @@ function init() {
       v.camera.updateProjectionMatrix();
       renderer.render(v.scene, v.camera);
     }
+  }
+
+  function frame() {
+    requestAnimationFrame(frame);
+    const dt = Math.min(clock.getDelta(), 0.05);
+    time += dt;
+    const vh = window.innerHeight;
+    const vw = window.innerWidth;
+    for (const L of layers) renderLayer(L, time, dt, vw, vh);
   }
   requestAnimationFrame(frame);
   document.documentElement.classList.add("gl-ready");
