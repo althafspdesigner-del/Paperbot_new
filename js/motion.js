@@ -77,7 +77,9 @@
         var r = it.host.getBoundingClientRect();
         if (r.bottom < -300 || r.top > vh + 300) continue;
         var d = r.top + r.height / 2 - vh / 2;
-        it.el.style.setProperty("--py", (d * it.k).toFixed(1) + "px");
+        // Cap the drift so tall sections can't carry a sticker onto nearby content.
+        var py = Math.max(-70, Math.min(70, d * it.k));
+        it.el.style.setProperty("--py", py.toFixed(1) + "px");
         if (it.spin) it.el.style.setProperty("--pr", (d * it.spin * 0.02).toFixed(2) + "deg");
       }
     };

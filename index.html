@@ -322,7 +322,7 @@
 
     <!-- ================= SPEC SHEET ================= -->
     <section class="section specs" id="specs" aria-labelledby="specs-title">
-      <span class="sticker sticker--peel" data-sticker data-parallax="0.14" data-spin="0.3" style="--mx:78%;--my:4%;--x:84%;--y:8%;--w:84px;--r:10deg;--delay:0s" aria-hidden="true"><span class="sticker__body"><svg viewBox="-10 -10 112 126"><use href="#st-shield" filter="url(#diecut)"/></svg></span></span>
+      <span class="sticker sticker--peel" data-sticker data-parallax="0.14" data-spin="0.3" style="--mx:76%;--my:1.5%;--x:84%;--y:4%;--w:84px;--r:10deg;--delay:0s" aria-hidden="true"><span class="sticker__body"><svg viewBox="-10 -10 112 126"><use href="#st-shield" filter="url(#diecut)"/></svg></span></span>
       <span class="sticker sticker--desk" data-sticker data-parallax="0.22" style="--x:79%;--y:6%;--w:26px;--r:-14deg;--delay:0s" aria-hidden="true"><span class="sticker__body"><svg viewBox="-8 -8 56 56"><use href="#st-square" filter="url(#diecut)"/></svg></span></span>
       <div class="container">
         <header class="section__head section__head--left" data-reveal>
@@ -330,18 +330,109 @@
           <h2 id="specs-title">Platform specs.</h2>
           <p class="section__lead">The detail, laid out clearly.</p>
         </header>
-        <dl class="specs__grid">
-          <div class="spec" data-fold><dt class="mono">Deployment</dt><dd>Cloud-hosted or dedicated environment</dd></div>
-          <div class="spec" data-fold><dt class="mono">Trading platforms</dt><dd>Connectivity for leading Forex &amp; CFD platforms</dd></div>
-          <div class="spec" data-fold><dt class="mono">Client portal</dt><dd>White-label Trader's Room, mobile-ready</dd></div>
-          <div class="spec" data-fold><dt class="mono">Partners</dt><dd>Multi-level IB, rebates, referral tracking</dd></div>
-          <div class="spec" data-fold><dt class="mono">Payments</dt><dd>PSP &amp; crypto gateways, multi-currency wallets</dd></div>
-          <div class="spec" data-fold><dt class="mono">Compliance</dt><dd>KYC/AML workflows, document vault, audit logs</dd></div>
-          <div class="spec" data-fold><dt class="mono">Security</dt><dd>Role-based access, 2FA, encrypted data, activity logs</dd></div>
-          <div class="spec" data-fold><dt class="mono">Localisation</dt><dd>Multi-language, multi-currency, multi-entity</dd></div>
-          <div class="spec" data-fold><dt class="mono">Integrations</dt><dd>REST API, webhooks, email, SMS &amp; telephony</dd></div>
-          <div class="spec" data-fold><dt class="mono">Support</dt><dd>Dedicated onboarding &amp; technical support</dd></div>
-        </dl>
+        <ul class="spec-grid">
+          <li class="spec-card" data-fold>
+            <div class="spec-art" aria-hidden="true">
+              <div class="ui-seg ui-float" style="left:14px;top:18px"><span class="is-on">Cloud</span><span>Dedicated</span></div>
+              <div class="ui-stack ui-float-2" style="right:14px;top:72px"><i><b></b></i><i><b></b></i><i><b class="is-busy"></b></i></div>
+              <span class="ui-chip ui-mono" style="left:14px;bottom:18px">region: auto</span>
+            </div>
+            <h3 class="mono">Deployment</h3>
+            <p>Cloud-hosted or dedicated environment</p>
+          </li>
+          <li class="spec-card" data-fold>
+            <div class="spec-art" aria-hidden="true">
+              <svg class="ui-link" viewBox="0 0 240 170" preserveAspectRatio="none"><path d="M44 52C120 52 96 118 176 118"/></svg>
+              <span class="ui-chip ui-float" style="left:14px;top:34px"><b class="ui-dot"></b>CRM</span>
+              <span class="ui-chip ui-float-2" style="right:14px;top:100px"><b class="ui-dot ui-dot--dark"></b>Trading server</span>
+              <span class="ui-chip ui-chip--ok ui-mono" style="right:22px;top:24px">● synced</span>
+            </div>
+            <h3 class="mono">Trading platforms</h3>
+            <p>Connectivity for leading Forex &amp; CFD platforms</p>
+          </li>
+          <li class="spec-card" data-fold>
+            <div class="spec-art" aria-hidden="true">
+              <div class="ui-window ui-float" style="left:16px;top:18px">
+                <div class="ui-window__bar"><i></i><i></i><i></i></div>
+                <div class="ui-window__body"><span class="ui-window__side"></span><span class="ui-lines"><i></i><i></i><i class="is-short"></i></span><span class="ui-btn">Deposit</span></div>
+              </div>
+              <div class="ui-seg ui-seg--sm ui-float-2" style="right:12px;bottom:16px"><span>Web</span><span class="is-on">Mobile</span></div>
+            </div>
+            <h3 class="mono">Client portal</h3>
+            <p>White-label Trader's Room, mobile-ready</p>
+          </li>
+          <li class="spec-card" data-fold>
+            <div class="spec-art" aria-hidden="true">
+              <span class="ui-chip ui-chip--dark ui-tip ui-float" style="right:22px;top:20px">Add partner</span>
+              <div class="ui-avatars" style="left:16px;top:70px"><i>IB</i><i>L1</i><i>L2</i><i class="is-count">+12</i><i class="is-add">+</i></div>
+              <svg class="ui-cursor ui-float-2" viewBox="0 0 24 24" style="right:30px;top:96px"><path d="M5 3l14 8-6 2-3 6z"/></svg>
+              <span class="ui-chip ui-mono" style="left:16px;bottom:16px">rebate: 3 levels</span>
+            </div>
+            <h3 class="mono">Partners</h3>
+            <p>Multi-level IB, rebates, referral tracking</p>
+          </li>
+          <li class="spec-card" data-fold>
+            <div class="spec-art" aria-hidden="true">
+              <span class="ui-chip ui-mono ui-float" style="left:14px;top:18px">USD · EUR · USDT</span>
+              <div class="ui-bars" style="left:14px;right:14px;top:66px"><i style="--w:52%"></i><i style="--w:30%"></i><i style="--w:18%"></i></div>
+              <div class="ui-bars ui-bars--soft" style="left:14px;right:60px;top:92px"><i style="--w:40%"></i><i style="--w:60%"></i></div>
+              <span class="ui-chip ui-chip--cobalt ui-float-2" style="right:14px;bottom:16px">+ Deposit</span>
+              <span class="ui-chip ui-mono" style="left:14px;bottom:16px">PSP · crypto</span>
+            </div>
+            <h3 class="mono">Payments</h3>
+            <p>PSP &amp; crypto gateways, multi-currency wallets</p>
+          </li>
+          <li class="spec-card" data-fold>
+            <div class="spec-art" aria-hidden="true">
+              <div class="ui-panel ui-float" style="left:14px;right:14px;top:16px">
+                <div class="ui-row"><b class="ui-check"></b>ID document<span class="ui-pill">verified</span></div>
+                <div class="ui-row"><b class="ui-check"></b>Proof of address<span class="ui-pill">verified</span></div>
+                <div class="ui-row"><b class="ui-check is-pending"></b>AML screening<span class="ui-pill is-pending">running</span></div>
+              </div>
+            </div>
+            <h3 class="mono">Compliance</h3>
+            <p>KYC/AML workflows, document vault, audit logs</p>
+          </li>
+          <li class="spec-card" data-fold>
+            <div class="spec-art" aria-hidden="true">
+              <div class="ui-otp ui-float" style="left:14px;top:22px"><i>4</i><i>8</i><i>1</i><i class="is-caret"></i><i></i><i></i></div>
+              <span class="ui-chip ui-chip--dark ui-float-2" style="left:14px;bottom:18px"><svg viewBox="0 0 24 24" class="ui-ico"><path d="M7 11V8a5 5 0 0 1 10 0v3"/><rect x="5" y="11" width="14" height="10" rx="2"/></svg>Role: Dealer</span>
+              <span class="ui-chip ui-mono" style="right:14px;bottom:18px">2FA on</span>
+            </div>
+            <h3 class="mono">Security</h3>
+            <p>Role-based access, 2FA, encrypted data, activity logs</p>
+          </li>
+          <li class="spec-card" data-fold>
+            <div class="spec-art" aria-hidden="true">
+              <div class="ui-seg ui-seg--chips ui-float" style="left:14px;top:20px"><span class="is-on">EN</span><span>AR</span><span>RU</span><span>ES</span></div>
+              <div class="ui-seg ui-seg--chips ui-float-2" style="right:14px;top:74px"><span>$</span><span class="is-on">€</span><span>£</span><span>AED</span></div>
+              <span class="ui-big">Aa</span>
+            </div>
+            <h3 class="mono">Localisation</h3>
+            <p>Multi-language, multi-currency, multi-entity</p>
+          </li>
+          <li class="spec-card" data-fold>
+            <div class="spec-art" aria-hidden="true">
+              <svg class="ui-link ui-link--fan" viewBox="0 0 240 170" preserveAspectRatio="none"><path d="M120 86L52 34M120 86L196 40M120 86L56 138M120 86L188 134"/></svg>
+              <span class="ui-hub"></span>
+              <span class="ui-chip ui-mono ui-float" style="left:10px;top:20px">POST /webhooks</span>
+              <span class="ui-chip ui-mono ui-float-2" style="right:12px;top:26px">REST</span>
+              <span class="ui-chip ui-mono ui-float-2" style="left:16px;bottom:16px">SMS</span>
+              <span class="ui-chip ui-mono ui-float" style="right:18px;bottom:20px">Email</span>
+            </div>
+            <h3 class="mono">Integrations</h3>
+            <p>REST API, webhooks, email, SMS &amp; telephony</p>
+          </li>
+          <li class="spec-card" data-fold>
+            <div class="spec-art" aria-hidden="true">
+              <div class="ui-bubble ui-float" style="left:14px;top:16px"><span class="ui-face"></span>Kick-off call booked</div>
+              <div class="ui-bubble ui-bubble--me ui-float-2" style="right:14px;top:66px">Great, see you then</div>
+              <div class="ui-typing" style="left:14px;bottom:18px"><i></i><i></i><i></i></div>
+            </div>
+            <h3 class="mono">Support</h3>
+            <p>Dedicated onboarding &amp; technical support</p>
+          </li>
+        </ul>
         <p class="specs__note" data-reveal>Specifications are representative. The exact scope for your brokerage is confirmed during your demo.</p>
       </div>
     </section>
