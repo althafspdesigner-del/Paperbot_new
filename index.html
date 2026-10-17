@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <script>document.documentElement.classList.add("js")</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PAPERBOT — CRM and trading technology for Forex brokerages</title>
+  <meta name="description" content="PAPERBOT builds AI-driven fintech software: CRM, Trader's Room, IB programs, payments, compliance and reporting for Forex brokerages, in one platform." />
+  <meta name="theme-color" content="#F5F5F2" />
+  <meta property="og:title" content="PAPERBOT Technologies FZCO" />
+  <meta property="og:description" content="Bright intelligence. Built with precision. CRM and trading technology for Forex brokerages." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@500&display=swap" /></noscript>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- One transparent WebGL canvas behind the page. Scenes are drawn into [data-scene] slots. -->
+  <canvas id="gl" aria-hidden="true"></canvas>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-crm" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M10 14h20l6 6v18H10z"/><path d="M30 14v6h6"/><path d="M16 26h14M16 32h10"/></g></symbol>
+      <symbol id="i-portal" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="8" y="10" width="32" height="26" rx="4"/><path d="M8 17h32"/><path d="M14 24h8v6h-8zM26 24h8M26 30h6"/></g></symbol>
+      <symbol id="i-network" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><circle cx="24" cy="12" r="4"/><circle cx="12" cy="34" r="4"/><circle cx="36" cy="34" r="4"/><path d="M21 15l-7 16M27 15l7 16M16 34h16"/></g></symbol>
+      <symbol id="i-plug" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M16 8v8M32 8v8"/><path d="M12 16h24v6a12 12 0 0 1-24 0z"/><path d="M24 34v8"/></g></symbol>
+      <symbol id="i-wallet" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M8 16a4 4 0 0 1 4-4h22v6"/><rect x="8" y="16" width="32" height="22" rx="3"/><path d="M30 25h10v6H30a3 3 0 0 1 0-6z"/></g></symbol>
+      <symbol id="i-shield" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M24 6l14 5v12c0 9-6 15-14 19C16 38 10 32 10 23V11z"/><path d="M17 24l5 5 9-10"/></g></symbol>
+      <symbol id="i-chart" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M8 38h32"/><path d="M12 32l8-9 7 5 9-13"/><path d="M30 15h6v6"/></g></symbol>
+      <symbol id="i-api" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"><path d="M18 12c-4 0-5 2-5 5v4c0 2-2 3-4 3 2 0 4 1 4 3v4c0 3 1 5 5 5M30 12c4 0 5 2 5 5v4c0 2 2 3 4 3-2 0-4 1-4 3v4c0 3-1 5-5 5"/><path d="M21 30l6-12"/></g></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5L19 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    </defs>
+  </svg>
+
+  <header class="nav" id="top">
+    <div class="nav__inner">
+      <a class="brand" href="#top" aria-label="PAPERBOT — home">
+        <img class="brand__logo" src="assets/paperbot-wordmark.svg" width="132" height="26" alt="PAPERBOT" />
+      </a>
+      <button class="nav__toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav__links" id="nav-links" aria-label="Primary">
+        <a href="#platform">Platform</a>
+        <a href="#how">How it works</a>
+        <a href="#specs">Specs</a>
+        <a href="#faq">FAQ</a>
+        <a class="btn btn--primary btn-shine nav__cta" href="#demo">Book a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <!-- ================= HERO (Sonora-style: giant word, robot in front) ================= -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__frame">
+        <p class="hero__meta hero__meta--l mono hero__in" style="--i:0">AI-driven fintech software</p>
+        <p class="hero__meta hero__meta--r mono hero__in" style="--i:0">Technologies FZCO</p>
+        <div class="hero__stage">
+          <p class="hero__word" aria-hidden="true">PAPERBOT</p>
+          <div class="scene-slot scene-slot--hero" data-scene="hero" aria-hidden="true">
+            <div class="scene-fallback">
+              <img src="assets/paperbot-wordmark.svg" width="260" height="52" alt="" />
+            </div>
+          </div>
+        </div>
+        <div class="hero__copy">
+          <h1 id="hero-title" class="hero__title hero__in" style="--i:1">Bright intelligence.<br />Built with precision.</h1>
+          <p class="hero__lead hero__in" style="--i:2">CRM and trading technology that keeps your Forex brokerage organised, so your team can focus on clients.</p>
+          <div class="hero__actions hero__in" style="--i:3">
+            <a class="btn btn--primary btn--lg btn-shine" href="#demo">Book a demo <svg width="18" height="18" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <a class="btn btn--ghost btn--lg" href="#platform">Explore the platform</a>
+          </div>
+        </div>
+        <a class="hero__scroll" href="#platform" aria-label="Scroll to the platform section"><span></span></a>
+      </div>
+    </section>
+
+    <!-- ================= MARQUEE ================= -->
+    <section class="strip" aria-label="Platform capabilities">
+      <div class="marquee">
+        <div class="marquee__track">
+          <div class="marquee__group"><span>Forex CRM</span><span>Trader's Room</span><span>IB &amp; Partner Program</span><span>KYC &amp; Compliance</span><span>Payments &amp; Wallets</span><span>Risk &amp; Dealing</span><span>Reporting &amp; BI</span><span>Multi-language</span><span>Multi-currency</span><span>API-first</span></div>
+          <div class="marquee__group" aria-hidden="true"><span>Forex CRM</span><span>Trader's Room</span><span>IB &amp; Partner Program</span><span>KYC &amp; Compliance</span><span>Payments &amp; Wallets</span><span>Risk &amp; Dealing</span><span>Reporting &amp; BI</span><span>Multi-language</span><span>Multi-currency</span><span>API-first</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ESSENCE ================= -->
+    <section class="section essence" aria-labelledby="essence-title">
+      <div class="container essence__grid">
+        <div data-reveal>
+          <p class="label mono">01 / Our expression</p>
+          <h2 id="essence-title">One platform for the whole brokerage.</h2>
+        </div>
+        <ul class="essence__list" data-reveal>
+          <li><strong>Intelligent</strong> in its structure.</li>
+          <li><strong>Human</strong> in its language.</li>
+          <li><strong>Confident</strong> in every detail.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ================= PLATFORM BREAKDOWN (bento) ================= -->
+    <section class="section section--pearl" id="platform" aria-labelledby="platform-title">
+      <div class="container">
+        <header class="section__head" data-reveal>
+          <p class="label mono">02 / Platform</p>
+          <h2 id="platform-title">Every layer of the brokerage, in one stack.</h2>
+          <p class="section__lead">Each module your sales, dealing, finance and compliance teams need: connected, branded and reporting into the same place.</p>
+        </header>
+
+        <div class="bento">
+          <article class="card card--feature tilt" style="grid-area:crm" data-reveal>
+            <div class="card__icon"><svg width="30" height="30" aria-hidden="true"><use href="#i-crm"/></svg></div>
+            <h3>Forex CRM</h3>
+            <p>A single source of truth for every lead, client and account. Pipelines, tasks, automations and client timelines for sales and retention teams.</p>
+            <ul class="card__list">
+              <li>Lead capture &amp; distribution</li>
+              <li>Retention journeys &amp; tasks</li>
+              <li>Email, SMS and call logging</li>
+            </ul>
+            <div class="card__art card__art--stack" aria-hidden="true"><i></i><i></i><i></i></div>
+          </article>
+
+          <article class="card tilt" style="grid-area:room" data-reveal>
+            <div class="card__icon"><svg width="30" height="30" aria-hidden="true"><use href="#i-portal"/></svg></div>
+            <h3>Trader's Room</h3>
+            <p>A branded client portal for registration, deposits, withdrawals, account management and documents, on web and mobile.</p>
+          </article>
+
+          <article class="card card--tall card--cobalt tilt" style="grid-area:ib" data-reveal>
+            <div class="card__icon"><svg width="30" height="30" aria-hidden="true"><use href="#i-network"/></svg></div>
+            <h3>IB &amp; Partner Program</h3>
+            <p>Multi-level IB structures, rebates, commissions, referral links and partner dashboards that settle automatically.</p>
+            <div class="card__art card__art--tree" aria-hidden="true">
+              <span class="node node--root"></span>
+              <span class="node"></span><span class="node"></span><span class="node"></span>
+              <span class="node node--leaf"></span><span class="node node--leaf"></span><span class="node node--leaf"></span><span class="node node--leaf"></span>
+            </div>
+          </article>
+
+          <article class="card tilt" style="grid-area:conn" data-reveal>
+            <div class="card__icon"><svg width="30" height="30" aria-hidden="true"><use href="#i-plug"/></svg></div>
+            <h3>Trading platform connectivity</h3>
+            <p>Bridges to the trading platforms your desk runs: account creation, balance operations, real-time trade data and reporting.</p>
+          </article>
+
+          <article class="card tilt" style="grid-area:pay" data-reveal>
+            <div class="card__icon"><svg width="30" height="30" aria-hidden="true"><use href="#i-wallet"/></svg></div>
+            <h3>Payments &amp; wallets</h3>
+            <p>PSP integrations, multi-currency wallets, internal transfers and configurable deposit and withdrawal workflows.</p>
+          </article>
+
+          <article class="card tilt" style="grid-area:kyc" data-reveal>
+            <div class="card__icon"><svg width="30" height="30" aria-hidden="true"><use href="#i-shield"/></svg></div>
+            <h3>Compliance &amp; KYC</h3>
+            <p>Document collection, verification providers, risk scoring and audit trails for your regulators and your ops team.</p>
+          </article>
+
+          <article class="card card--wide tilt" style="grid-area:ops" data-reveal>
+            <div class="card__icon"><svg width="30" height="30" aria-hidden="true"><use href="#i-chart"/></svg></div>
+            <h3>Back office, risk &amp; reporting</h3>
+            <p>Dealing desk tools, exposure monitoring, bonus engines and real-time BI across sales, finance and dealing, from the same login.</p>
+            <div class="card__art card__art--bars" aria-hidden="true"><i style="--h:40%"></i><i style="--h:65%"></i><i style="--h:50%"></i><i style="--h:85%"></i><i style="--h:70%"></i><i style="--h:95%"></i></div>
+          </article>
+
+          <article class="card tilt" style="grid-area:api" data-reveal>
+            <div class="card__icon"><svg width="30" height="30" aria-hidden="true"><use href="#i-api"/></svg></div>
+            <h3>Open API</h3>
+            <p>REST APIs and webhooks so your own apps, bots and partners plug straight into the platform.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= HOW IT WORKS (paper rocket) ================= -->
+    <section class="section how" id="how" aria-labelledby="how-title">
+      <div class="container how__grid">
+        <div class="how__scene">
+          <div class="scene-slot scene-slot--launch" data-scene="launch" aria-hidden="true"></div>
+        </div>
+        <div class="how__copy">
+          <header class="section__head section__head--left" data-reveal>
+            <p class="label mono">03 / How it works</p>
+            <h2 id="how-title">From first lead to funded trade.</h2>
+          </header>
+          <ol class="steps">
+            <li class="step" data-reveal>
+              <span class="step__num mono">01</span>
+              <div>
+                <h3>Onboard</h3>
+                <p>Capture leads from your site, ads and partners. Automated KYC, e-signatures and welcome journeys turn applications into verified clients.</p>
+              </div>
+            </li>
+            <li class="step" data-reveal>
+              <span class="step__num mono">02</span>
+              <div>
+                <h3>Fund</h3>
+                <p>Clients deposit through your connected PSPs into multi-currency wallets, with approval rules and alerts your finance team controls.</p>
+              </div>
+            </li>
+            <li class="step" data-reveal>
+              <span class="step__num mono">03</span>
+              <div>
+                <h3>Trade</h3>
+                <p>Trading accounts are created on your platforms. Balances, trades and margin stream back into the CRM in real time.</p>
+              </div>
+            </li>
+            <li class="step" data-reveal>
+              <span class="step__num mono">04</span>
+              <div>
+                <h3>Scale</h3>
+                <p>IB structures, bonus engines, retention automations and BI dashboards grow with every new region, brand and desk.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SPEC SHEET ================= -->
+    <section class="section specs" id="specs" aria-labelledby="specs-title">
+      <div class="container">
+        <header class="section__head section__head--left" data-reveal>
+          <p class="label mono">04 / Spec sheet</p>
+          <h2 id="specs-title">Platform specs.</h2>
+          <p class="section__lead">The detail, laid out clearly.</p>
+        </header>
+        <dl class="specs__grid">
+          <div class="spec" data-reveal><dt class="mono">Deployment</dt><dd>Cloud-hosted or dedicated environment</dd></div>
+          <div class="spec" data-reveal><dt class="mono">Trading platforms</dt><dd>Connectivity for leading Forex &amp; CFD platforms</dd></div>
+          <div class="spec" data-reveal><dt class="mono">Client portal</dt><dd>White-label Trader's Room, mobile-ready</dd></div>
+          <div class="spec" data-reveal><dt class="mono">Partners</dt><dd>Multi-level IB, rebates, referral tracking</dd></div>
+          <div class="spec" data-reveal><dt class="mono">Payments</dt><dd>PSP &amp; crypto gateways, multi-currency wallets</dd></div>
+          <div class="spec" data-reveal><dt class="mono">Compliance</dt><dd>KYC/AML workflows, document vault, audit logs</dd></div>
+          <div class="spec" data-reveal><dt class="mono">Security</dt><dd>Role-based access, 2FA, encrypted data, activity logs</dd></div>
+          <div class="spec" data-reveal><dt class="mono">Localisation</dt><dd>Multi-language, multi-currency, multi-entity</dd></div>
+          <div class="spec" data-reveal><dt class="mono">Integrations</dt><dd>REST API, webhooks, email, SMS &amp; telephony</dd></div>
+          <div class="spec" data-reveal><dt class="mono">Support</dt><dd>Dedicated onboarding &amp; technical support</dd></div>
+        </dl>
+        <p class="specs__note" data-reveal>Specifications are representative. The exact scope for your brokerage is confirmed during your demo.</p>
+      </div>
+    </section>
+
+    <!-- ================= RESERVE A DEMO ================= -->
+    <section class="section demo" id="demo" aria-labelledby="demo-title">
+      <div class="container demo__grid">
+        <div class="demo__copy">
+          <div class="scene-slot scene-slot--core" data-scene="core" aria-hidden="true"></div>
+          <header class="section__head section__head--left" data-reveal>
+            <p class="label mono">05 / Book a demo</p>
+            <h2 id="demo-title">See PAPERBOT around your brokerage.</h2>
+            <p class="section__lead">Tell us about your desk and we'll walk you through the CRM, Trader's Room, partner engine and integrations that fit your stack.</p>
+          </header>
+          <ul class="demo__points" data-reveal>
+            <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg> 30-minute guided walkthrough</li>
+            <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg> Tailored to your platforms and regions</li>
+            <li><svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg> Migration and go-live plan included</li>
+          </ul>
+        </div>
+
+        <form class="card form" id="demo-form" data-reveal novalidate>
+          <div class="form__row">
+            <label>Full name<input type="text" name="name" autocomplete="name" required placeholder="Jordan Lee" aria-describedby="err-name" /><span class="form__error" id="err-name"></span></label>
+            <label>Work email<input type="email" name="email" autocomplete="email" required placeholder="you@brokerage.com" aria-describedby="err-email" /><span class="form__error" id="err-email"></span></label>
+          </div>
+          <div class="form__row">
+            <label>Brokerage<input type="text" name="company" autocomplete="organization" required placeholder="Your brokerage name" aria-describedby="err-company" /><span class="form__error" id="err-company"></span></label>
+            <label>I'm interested in
+              <select name="interest">
+                <option>The full platform</option>
+                <option>Forex CRM</option>
+                <option>Trader's Room</option>
+                <option>IB &amp; Partner Program</option>
+                <option>Trading platform connectivity</option>
+                <option>Payments &amp; compliance</option>
+              </select>
+            </label>
+          </div>
+          <label>Anything we should know?<textarea name="message" rows="3" placeholder="Platforms you run, regions, current CRM…"></textarea></label>
+          <button class="btn btn--primary btn--lg btn-shine form__submit" type="submit">Request a demo <svg width="18" height="18" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <p class="form__alert" role="alert"></p>
+          <p class="form__hint">No spam, no commitment. We'll get back to you to schedule a time.</p>
+          <div class="form__success" hidden>
+            <span class="form__square" aria-hidden="true"></span>
+            <h3 tabindex="-1">Request received</h3>
+            <p class="form__success-msg">Thanks. A PAPERBOT specialist will be in touch to schedule your demo.</p>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="section section--pearl faq" id="faq" aria-labelledby="faq-title">
+      <div class="container faq__grid">
+        <header class="section__head section__head--left" data-reveal>
+          <p class="label mono">06 / FAQ</p>
+          <h2 id="faq-title">Questions, answered.</h2>
+          <p class="section__lead">Still curious? <a href="#demo">Book a demo</a> and ask us anything.</p>
+        </header>
+        <div class="faq__list">
+          <details class="faq__item" data-reveal open>
+            <summary>Is PAPERBOT a white-label solution?</summary>
+            <p>Yes. The Trader's Room, client portal, emails and documents carry your brand, your domain and your languages. Your clients only ever see your brokerage.</p>
+          </details>
+          <details class="faq__item" data-reveal>
+            <summary>Which trading platforms do you connect to?</summary>
+            <p>PAPERBOT is built to connect with the leading Forex and CFD trading platforms. Tell us your stack during the demo and we'll confirm the exact bridges and sync options you need.</p>
+          </details>
+          <details class="faq__item" data-reveal>
+            <summary>Can we migrate from our current CRM?</summary>
+            <p>Yes. We map and import your clients, accounts, partners and history, and can run both systems in parallel until you're ready to cut over.</p>
+          </details>
+          <details class="faq__item" data-reveal>
+            <summary>How long does onboarding take?</summary>
+            <p>It depends on the integrations, branding and data-migration scope you choose. We'll map out a go-live plan for your brokerage during the demo.</p>
+          </details>
+          <details class="faq__item" data-reveal>
+            <summary>Is the platform secure and compliant?</summary>
+            <p>Role-based access, two-factor authentication, encrypted data and full audit trails are standard. KYC/AML workflows are configurable to your regulators' requirements.</p>
+          </details>
+          <details class="faq__item" data-reveal>
+            <summary>Do you support multiple brands or regions?</summary>
+            <p>Yes. Run several brands, entities and regions from one back office, each with its own branding, languages, currencies and partner structures.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CTA BAND (cobalt surface) ================= -->
+    <section class="section cta" aria-labelledby="cta-title">
+      <div class="container">
+        <div class="cta__card" data-reveal>
+          <img class="cta__logo" src="assets/paperbot-wordmark-white.svg" width="220" height="43" alt="PAPERBOT" />
+          <h2 id="cta-title">Make complex work feel simple.</h2>
+          <p>Run sales, dealing, finance and compliance from one PAPERBOT workspace.</p>
+          <div class="cta__actions">
+            <a class="btn btn--white btn--lg btn-shine" href="#demo">Book a demo <svg width="18" height="18" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <a class="btn btn--outline-white btn--lg" href="#platform">Explore our technology</a>
+          </div>
+          <span class="cta__square" aria-hidden="true"></span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <img src="assets/paperbot-signature.svg" width="220" height="50" alt="PAPERBOT Technologies FZCO" />
+        <p>AI-driven fintech software. CRM and trading technology for Forex brokerages.</p>
+      </div>
+      <nav class="footer__col" aria-label="Platform">
+        <h4 class="mono">Platform</h4>
+        <a href="#platform">Forex CRM</a>
+        <a href="#platform">Trader's Room</a>
+        <a href="#platform">IB &amp; Partner Program</a>
+        <a href="#platform">Integrations &amp; API</a>
+      </nav>
+      <nav class="footer__col" aria-label="Resources">
+        <h4 class="mono">Resources</h4>
+        <a href="#how">How it works</a>
+        <a href="#specs">Spec sheet</a>
+        <a href="#faq">FAQ</a>
+        <a href="#demo">Request a demo</a>
+      </nav>
+    </div>
+    <div class="container footer__bottom mono">
+      <p>PAPERBOT Technologies FZCO</p>
+      <p>paperbot.ae · © <span id="year">2026</span></p>
+    </div>
+  </footer>
+
+  <script src="js/reveal.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/scene.bundle.js" defer></script>
+</body>
+</html>
