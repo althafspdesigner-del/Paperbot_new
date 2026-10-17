@@ -1,0 +1,13 @@
+{
+  // Cloudflare Workers (static assets). Deploys this folder as-is:
+  // no build step, the Three.js bundle is committed.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "paperbot",
+  "compatibility_date": "2026-10-17",
+  "assets": {
+    "directory": "./",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "observability": { "enabled": true }
+}

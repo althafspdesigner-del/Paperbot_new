@@ -23,6 +23,16 @@ npm run serve        # http://localhost:4173
 Or open `index.html` from any static host (Netlify, Vercel, GitHub Pages, S3…).
 Deploy the folder as-is; `node_modules/` is not required at runtime.
 
+## Deploy to Cloudflare Workers
+
+`wrangler.jsonc` serves this folder as static assets (no build step). Connect
+the GitHub repository in the Cloudflare dashboard: **Workers & Pages → Create →
+Import a repository**, pick this repo, leave the build command empty and keep
+the deploy command `npx wrangler deploy`. Every push to `main` redeploys. Or
+from a machine with Cloudflare access: `npm install && npm run deploy`.
+`.assetsignore` keeps sources and config out of the upload; `_headers` sets
+cache and security headers.
+
 ## Edit the 3D scenes
 
 ```bash

@@ -1,0 +1,12 @@
+# Files that should not be uploaded as site assets
+.git
+.gitignore
+.assetsignore
+node_modules
+src
+package.json
+package-lock.json
+serve.js
+README.md
+netlify.toml
+wrangler.jsonc

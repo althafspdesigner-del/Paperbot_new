@@ -2,17 +2,19 @@
   "name": "paperbot-site",
   "version": "1.0.0",
   "private": true,
-  "description": "Paperbot Fintech Solutions — animated 3D paper-robot marketing site (static HTML/CSS + Three.js)",
+  "description": "Paperbot Fintech Solutions \u2014 animated 3D paper-robot marketing site (static HTML/CSS + Three.js)",
   "scripts": {
     "build": "esbuild src/scene.js --bundle --minify --format=iife --target=es2019 --outfile=js/scene.bundle.js",
     "watch": "esbuild src/scene.js --bundle --format=iife --target=es2019 --outfile=js/scene.bundle.js --watch",
-    "serve": "node serve.js"
+    "serve": "node serve.js",
+    "deploy": "wrangler deploy"
   },
   "license": "UNLICENSED",
   "dependencies": {
     "three": "^0.169.0"
   },
   "devDependencies": {
-    "esbuild": "^0.24.0"
+    "esbuild": "^0.24.0",
+    "wrangler": "^4.42.0"
   }
 }
