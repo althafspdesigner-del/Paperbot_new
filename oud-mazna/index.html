@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oud Mazna Box 3D</title>
+<meta name="robots" content="noindex">
+<style>
+  :root { --ink: #2a1219; --muted: #6d5a5e; --gold: #b8965a; --panel: rgba(255, 252, 248, 0.86); --line: rgba(42, 18, 25, 0.12); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--ink);
+    background: radial-gradient(ellipse 70% 60% at 50% 42%, #f0d3ad 0%, #d7bea3 35%, #a9a19a 75%, #8e8b89 100%);
+    overflow: hidden;
+  }
+  canvas { display: block; width: 100vw; height: 100vh; touch-action: none; }
+  header { position: fixed; top: 16px; left: 16px; right: 16px; display: flex; justify-content: space-between; align-items: center; pointer-events: none; }
+  h1 { margin: 0; font-size: 15px; font-weight: 650; letter-spacing: 0.08em; text-transform: uppercase; }
+  h1 span { color: var(--muted); font-weight: 450; letter-spacing: 0.02em; text-transform: none; margin-left: 8px; }
+  .panel {
+    position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); width: min(760px, calc(100vw - 32px));
+    display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; padding: 12px 16px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 14px; backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px -18px rgba(42, 18, 25, 0.6);
+  }
+  label { display: flex; align-items: center; gap: 8px; color: var(--muted); }
+  .lid { flex: 1 1 220px; }
+  input[type=range] { flex: 1; accent-color: #7a2238; }
+  output { min-width: 3.5em; text-align: right; font-variant-numeric: tabular-nums; color: var(--ink); }
+  button {
+    font: inherit; padding: 7px 12px; border-radius: 9px; border: 1px solid var(--line); background: #fff; color: var(--ink); cursor: pointer;
+  }
+  button[aria-pressed="true"] { background: #4a1626; border-color: #4a1626; color: #fff; }
+  button:focus-visible, input:focus-visible { outline: 2px solid #7a2238; outline-offset: 2px; }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; }
+  .seg button { border: 0; border-radius: 0; }
+  #status { position: fixed; inset: 0; display: grid; place-items: center; color: var(--ink); pointer-events: none; }
+  #status[hidden] { display: none; }
+  @media (max-width: 520px) { h1 span { display: none; } .panel { gap: 8px 10px; } }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "./vendor/three/build/three.module.js",
+  "three/addons/": "./vendor/three/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<header><h1>Oud Mazna <span>Presentation box, 110 × 240 × 60 mm</span></h1></header>
+<div id="status">Loading model…</div>
+<div class="panel" role="group" aria-label="Viewer controls">
+  <label class="lid">Lid <input id="lid" type="range" min="0" max="180" value="0" step="1" aria-label="Lid angle in degrees"><output id="lidOut">0°</output></label>
+  <button id="play" aria-pressed="false">Play open / close</button>
+  <button id="spin" aria-pressed="true">Auto-rotate</button>
+  <span class="seg" role="group" aria-label="Inside lid artwork">
+    <button id="vCopy" aria-pressed="true" title="Gold copy, as on the real box">Inside: copy</button>
+    <button id="vEmblem" aria-pressed="false" title="Emblem only, as in the 360 mockup">Inside: emblem</button>
+  </span>
+  <span class="seg" role="group" aria-label="Bottle hardware finish">
+    <button id="mGold" aria-pressed="true" title="Gold cap, collar, band and plinth (retail build)">Gold</button>
+    <button id="mSilver" aria-pressed="false" title="Silver hardware, as in the 360 mockup">Silver</button>
+  </span>
+</div>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const FILES = { copy: './OudMazna_Box.glb', emblem: './OudMazna_Box_inner-emblem.glb' };
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 0.92;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.body.prepend(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environmentIntensity = 0.55;
+
+const disc = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.014, 160),
+  new THREE.MeshPhysicalMaterial({ color: 0xf6f5f3, roughness: 0.22, clearcoat: 0.6, clearcoatRoughness: 0.15 }));
+disc.position.y = -0.127; disc.receiveShadow = true; scene.add(disc);
+
+const key = new THREE.DirectionalLight(0xfff0dc, 2.1);
+key.position.set(-0.55, 0.85, 1.0); key.castShadow = true; key.shadow.mapSize.set(2048, 2048);
+Object.assign(key.shadow.camera, { left: -0.35, right: 0.35, top: 0.35, bottom: -0.35, near: 0.1, far: 3 });
+key.shadow.bias = -0.0004; key.shadow.normalBias = 0.0006;
+scene.add(key);
+const fill = new THREE.DirectionalLight(0xffe2cc, 0.7); fill.position.set(1.0, 0.25, 0.7); scene.add(fill);
+const rim = new THREE.DirectionalLight(0xffffff, 1.8); rim.position.set(0.35, 0.9, -1.0); scene.add(rim);
+const top = new THREE.DirectionalLight(0xffffff, 0.6); top.position.set(0, 1, 0.2); scene.add(top);
+
+const camera = new THREE.PerspectiveCamera(28, innerWidth / innerHeight, 0.01, 10);
+const controls = new OrbitControls(camera, renderer.domElement);
+// Frame the box above the control panel; pull back on narrow (portrait) screens.
+function frame() {
+  const aspect = innerWidth / innerHeight;
+  const d = 0.74 * Math.max(1, Math.pow(0.95 / aspect, 0.9));
+  const dir = new THREE.Vector3(0.45, 0.17, 0.88).normalize();
+  controls.target.set(-0.03, -0.035, 0);
+  camera.position.copy(controls.target).addScaledVector(dir, d);
+}
+frame();
+controls.enableDamping = true;
+controls.minDistance = 0.18; controls.maxDistance = 1.6;
+controls.maxPolarAngle = Math.PI * 0.53;
+controls.autoRotate = !reduceMotion; controls.autoRotateSpeed = 0.8;
+
+const turntable = new THREE.Group(); scene.add(turntable);
+let model, hinge, mixer, action, playing = false;
+const axis = new THREE.Vector3(0, 1, 0);
+const lid = document.getElementById('lid'), lidOut = document.getElementById('lidOut');
+const playBtn = document.getElementById('play'), spinBtn = document.getElementById('spin');
+const statusEl = document.getElementById('status');
+spinBtn.setAttribute('aria-pressed', String(controls.autoRotate));
+
+function setLid(deg) {
+  if (!hinge) return;
+  hinge.quaternion.setFromAxisAngle(axis, -deg * Math.PI / 180);
+  lid.value = Math.round(deg); lidOut.textContent = `${Math.round(deg)}°`;
+}
+
+async function load(variant) {
+  statusEl.textContent = 'Loading model…'; statusEl.hidden = false;
+  const gltf = await new GLTFLoader().loadAsync(FILES[variant]);
+  if (model) { turntable.remove(model); model.traverse((o) => { if (o.isMesh) o.geometry.dispose(); }); }
+  model = gltf.scene;
+  model.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+  turntable.add(model);
+  hinge = model.getObjectByName('Lid_hinge');
+  applyMetal();
+  mixer = new THREE.AnimationMixer(model);
+  action = mixer.clipAction(gltf.animations[0]);
+  action.setLoop(THREE.LoopRepeat);
+  setLid(+lid.value);
+  if (playing) action.play();
+  statusEl.hidden = true;
+}
+
+lid.addEventListener('input', () => { stopPlay(); setLid(+lid.value); });
+function stopPlay() { playing = false; action?.stop(); playBtn.setAttribute('aria-pressed', 'false'); }
+playBtn.addEventListener('click', () => {
+  playing = !playing; playBtn.setAttribute('aria-pressed', String(playing));
+  if (playing) action.reset().play(); else { action.stop(); setLid(+lid.value); }
+});
+spinBtn.addEventListener('click', () => {
+  controls.autoRotate = !controls.autoRotate; spinBtn.setAttribute('aria-pressed', String(controls.autoRotate));
+});
+for (const [id, v] of [['vCopy', 'copy'], ['vEmblem', 'emblem']]) {
+  document.getElementById(id).addEventListener('click', async (e) => {
+    e.currentTarget.parentElement.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b === e.currentTarget)));
+    await load(v);
+  });
+}
+
+// Hardware finish: recolour the metal materials (the GLB ships with the gold retail build).
+const FINISH = {
+  gold: { metal: 0xecbc6c, relief: 0xe4b262, print: 0xeccea6 },
+  silver: { metal: 0xe8e8ec, relief: 0xdedee4, print: 0xe2e2e6 },
+};
+let finish = 'gold';
+function applyMetal() {
+  if (!model) return;
+  const f = FINISH[finish];
+  model.traverse((o) => {
+    if (!o.isMesh) return;
+    const n = o.material.name || '';
+    if (/^Polished /.test(n)) o.material.color.setHex(f.metal);
+    else if (/arabesque relief$/.test(n)) o.material.color.setHex(f.relief);
+    else if (/foil print$/.test(n)) o.material.color.setHex(f.print);
+  });
+}
+for (const [id, v] of [['mGold', 'gold'], ['mSilver', 'silver']]) {
+  document.getElementById(id).addEventListener('click', (e) => {
+    e.currentTarget.parentElement.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b === e.currentTarget)));
+    finish = v; applyMetal();
+  });
+}
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
+  frame();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+const clock = new THREE.Clock();
+renderer.setAnimationLoop(() => {
+  const dt = clock.getDelta();
+  if (playing && mixer) {
+    mixer.update(dt);
+    const deg = -2 * Math.atan2(hinge.quaternion.y, hinge.quaternion.w) * 180 / Math.PI;
+    lid.value = Math.round(deg); lidOut.textContent = `${Math.round(deg)}°`;
+  }
+  controls.update();
+  renderer.render(scene, camera);
+});
+
+load('copy').catch((err) => {
+  statusEl.textContent = location.protocol === 'file:'
+    ? 'Open this page through a local web server (see README) — browsers block loading the model from file://.'
+    : `Could not load the model: ${err.message}`;
+});
+</script>
+</body>
+</html>
